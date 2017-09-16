@@ -10,8 +10,15 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount(){
+    var _this = this
+    fetch('http://localhost:5000/books').then((resp) => resp.json()).then(function(data){
+      _this.setState({books:data});
+    })
+  }
+
   handleChange(event) {
-    this.setState({value: event.target.value,books: sortByKey(arr,event.target.value)});
+    this.setState({value: event.target.value,books: sortByKey(this.state.books,event.target.value)});
   }
   render() {
     return (
