@@ -6,19 +6,23 @@ import Book from './Components/Book.js';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state={books: arr}
-    this.handleChange = this.handleChange.bind(this);
+    this.state={books: [],filteredBooks:[]}
+    this.handleSortChange = this.handleSortChange.bind(this);
+    this.handleGenreChange = this.handleGenreChange.bind(this);
   }
 
   componentDidMount(){
     var _this = this
     fetch('http://localhost:5000/books').then((resp) => resp.json()).then(function(data){
-      _this.setState({books:data});
+      _this.setState({books:data,filteredBooks:sortByKey(data,"title")});
     })
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value,books: sortByKey(this.state.books,event.target.value)});
+  handleSortChange(event) {
+    this.setState({sort: event.target.value,filteredBooks: sortByKey(this.state.filteredBooks,event.target.value)});
+  }
+  handleGenreChange(event) {
+    this.setState({genre: event.target.value,filteredBooks: sortByKey(filterByGenre(this.state.books,event.target.value),this.state.sort)});
   }
   render() {
     return (
@@ -30,14 +34,24 @@ class App extends Component {
         <p className="App-intro">
           We have books.
         </p>
-        <select value={this.state.value} onChange={this.handleChange}>
+        <p> Browse By genre:</p>
+        <select value={this.state.genre} onChange={this.handleGenreChange}>
+          <option value="All">All</option>
+          <option value="Biography">Biography</option>
+          <option value="Action">Action</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Comic">Comic</option>
+        </select>
+        <p> Sort By:</p>
+        <select value={this.state.sort} onChange={this.handleSortChange}>
           <option value="title">Title</option>
           <option value="author">Author</option>
           <option value="price">Price</option>
           <option value="rating">Rating</option>
           <option value="releaseDate">Release Date</option>
         </select>
-        {this.state.books.map((book,i)=>
+        {this.state.filteredBooks.map((book,i)=>
           <Book key ={i}
                 title={book.title}
                 author={book.author}
@@ -64,6 +78,12 @@ function sortByKey(array, key) {
           return 0
         }
     });
+}
+
+function filterByGenre(array,genre){
+  return array.filter(function(book){
+    return book.genre==genre || genre=="All";
+  })
 }
 var arr=[
           {title:"Mark's book1",

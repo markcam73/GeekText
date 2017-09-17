@@ -6,11 +6,11 @@ class Book extends Component {
       <div>
         <h1>{this.props.title}</h1>
         <img src={this.props.imageSrc}/>
-        <p>{this.props.author}</p>
-        <p>{this.props.genre}</p>
-        <p>{this.props.price}</p>
-        <p>{this.props.rating}</p>
-        <p>{this.props.releaseDate}</p>
+        <p>Author: {this.props.author}</p>
+        <p>Genre: {this.props.genre}</p>
+        <p>Price: {this.props.price}</p>
+        <p>Rating: {this.props.rating}</p>
+        <p>Release date:{this.props.releaseDate}</p>
       </div>
     );
   }
