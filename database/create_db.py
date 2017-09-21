@@ -1,7 +1,7 @@
 import sqlite3 as lite
 import sys
 
-con = lite.connect('geektext.db')
+con = lite.connect('./geektext.db')
 
 with con:
 

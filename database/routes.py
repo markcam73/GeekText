@@ -4,8 +4,9 @@ app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
 import sqlite3 as lite
+import os
 
-con = lite.connect('geektext.db')
+con = lite.connect(os.path.realpath(__file__)[0:os.path.realpath(__file__).find('routes.py')] + 'geektext.db')
 
 @app.route("/")
 def hello():
