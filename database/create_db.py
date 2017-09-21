@@ -1,7 +1,7 @@
 import sqlite3 as lite
 import sys
 
-con = lite.connect('./geektext.db')
+con = lite.connect(os.path.realpath(__file__)[0:os.path.realpath(__file__).find('create_db.py')] + 'geektext.db')
 
 with con:
 
