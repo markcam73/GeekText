@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import StarRatingComponent from 'react-star-rating-component';
 
 class Book extends Component {
   render() {
@@ -9,8 +10,13 @@ class Book extends Component {
         <p>Author: {this.props.author}</p>
         <p>Genre: {this.props.genre}</p>
         <p>Price: {this.props.price}</p>
-        <p>Rating: {this.props.rating}</p>
-        <p>Release date:{this.props.releaseDate}</p>
+        <p>Rating: <StarRatingComponent
+                    name="rate1"
+                    editing={false}
+                    starCount={5}
+                    value={this.props.rating}
+                    /></p>
+        <p>Release date: {this.props.releaseDate}</p>
       </div>
     );
   }
