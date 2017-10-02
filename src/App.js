@@ -90,7 +90,8 @@ class App extends Component {
         <Pagination onChange={this.onChangePage}
                     current={this.state.currentPage}
                     total={this.state.filteredBooks.length}
-                    pageSize={pageSize}/>
+                    pageSize={pageSize}
+                    showTitle={false}/>
       </div>
     );
   }
