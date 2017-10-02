@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Book from './Components/Book.js';
+import Pagination from 'rc-pagination';
+import 'rc-pagination/assets/index.css';
+
+const pageSize=2;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state={books: [],filteredBooks:[],sort:"title",order:1}
+    this.state={books: [],filteredBooks:[],sort:"title",order:1,currentPage:1}
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handleGenreChange = this.handleGenreChange.bind(this);
     this.handleOrderChange = this.handleOrderChange.bind(this);
@@ -27,6 +31,12 @@ class App extends Component {
   }
   handleOrderChange(event) {
     this.setState({order: event.target.value,filteredBooks: sortByKey(this.state.filteredBooks,this.state.sort, event.target.value)});
+  }
+  onChangePage = (page) => {
+    console.log(Math.ceil(this.state.filteredBooks.length/pageSize));
+    this.setState({
+      currentPage: page,
+    });
   }
   render() {
     return (
@@ -64,6 +74,7 @@ class App extends Component {
         </div>
         <div style={styles.booksStyle}>
           {this.state.filteredBooks.map((book,i)=>
+            (i<this.state.currentPage*pageSize && i>=(this.state.currentPage-1)*pageSize?
             <Book key ={i}
                   title={book.title}
                   author={book.author}
@@ -72,9 +83,14 @@ class App extends Component {
                   rating={book.rating}
                   price={book.price}
                   releaseDate={book.releaseDate}
-                  />
+                  /> : null)
           )}
+
         </div>
+        <Pagination onChange={this.onChangePage}
+                    current={this.state.currentPage}
+                    total={this.state.filteredBooks.length}
+                    pageSize={pageSize}/>
       </div>
     );
   }
