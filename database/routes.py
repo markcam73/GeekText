@@ -34,3 +34,25 @@ def books():
                 "releaseDate": row["ReleaseDate"]
             })
         return jsonify(to_return)
+@app.route("/books/<book_ID>")
+def get_book(book_ID):
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books WHERE Id=" + book_ID)
+
+        row = cur.fetchone()
+        to_return = None
+        to_return={
+            "id": row["Id"],
+            "title": row["Title"],
+            "imageSrc": row["ImageSrc"],
+            "author": row["Author"],
+            "genre": row["Genre"],
+            "rating": row["Rating"],
+            "price": row["Price"],
+            "releaseDate": row["ReleaseDate"]
+        }
+
+        return jsonify(to_return)
