@@ -9,13 +9,21 @@ with con:
     cur = con.cursor()
     cur.execute("DROP TABLE IF EXISTS Books")
     cur.execute("DROP TABLE IF EXISTS ShoppingCart")
+<<<<<<< HEAD
     cur.execute("CREATE TABLE Books(Id INT, Title TEXT, Author TEXT, ImageSrc TEXT, Genre TEXT, Rating INT, Price INT, ReleaseDate TEXT, CopiesSold INT)")
+=======
+    cur.execute("CREATE TABLE Books(Id INT, Title TEXT, Author TEXT, ImageSrc TEXT, Genre TEXT, Rating INT, Price MONEY, ReleaseDate TEXT, CopiesSold INT)") 
+>>>>>>> d9b07e9a41984b8d88becaed61b944c52dbe978f
     cur.execute("INSERT INTO Books VALUES(1, 'Battlefield Earth', 'L. Ron Hubbard', 'https://images-na.ssl-images-amazon.com/images/I/814C%2BsV1vJL.jpg', 'Sci-Fi & Fantasy', 5, 7.99, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(2, 'A Game of Thrones: A Song of Ice and Fire (Books 1-4)', 'George R. R. Martin', 'http://achalaupendran.com/wp-content/uploads/2016/06/song-of-ice-and-fire-book-cover.jpg', 'Sci-Fi & Fantasy', 5, 10.08, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(3, 'Ready Player One', 'Ernest Cline', 'http://agentpalmer.com/wp-content/uploads/2015/10/Ready-Player-One-Advance-Readers-Edition.png', 'Sci-Fi & Fantasy', 5, 9.99, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(4, 'The Martian', 'Andy Weir', 'http://insight.randomhouse.com/fullpage.do?pContentType=JPG&pName=fullpage&pISBN=9781101905005&pPageID=1', 'Sci-Fi & Fantasy', 5, 15, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(5, 'The Hobbit', 'J. R. R. Tolkien', 'https://cdn.pastemagazine.com/www/system/images/photo_albums/hobbit-book-covers/large/photo_5653_0-7.jpg?1384968217', 'Sci-Fi & Fantasy', 5, 14.99, 'Date', 10)")
+<<<<<<< HEAD
     cur.execute("""INSERT INTO Books VALUES(6, "Ender's Game", 'Orson Scott Card', 'https://westonlibraryteenbookreviews.files.wordpress.com/2015/04/ender-movie.jpg', 'Sci-Fi & Fantasy', 5, 4.7, 'Date', 10)""")
+=======
+    cur.execute("INSERT INTO Books VALUES(6, 'Ender's Game', 'Orson Scott Card', 'https://westonlibraryteenbookreviews.files.wordpress.com/2015/04/ender-movie.jpg', 'Sci-Fi & Fantasy', 5, 4.7, 'Date', 10)")
+>>>>>>> d9b07e9a41984b8d88becaed61b944c52dbe978f
     cur.execute("INSERT INTO Books VALUES(7, 'The Lord of the Rings: 50th Anniversary, One Vol. Edition', 'J. R. R. Tolkien', 'https://images-na.ssl-images-amazon.com/images/I/91rq1j7GYhL.jpg', 'Sci-Fi & Fantasy', 5, 12.43, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(8, '1984', 'George Orwell', 'https://s-media-cache-ak0.pinimg.com/originals/3f/fc/99/3ffc998b72aed768be34812da96d2607.jpg', 'Sci-Fi & Fantasy', 5, 9.99, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(9, 'Fahrenheit 451', 'Ray Bradbury', 'https://i.pinimg.com/736x/53/2e/30/532e3088dc4ab0893dbd81d0968968cc--moon-face-fahrenheit-.jpg', 'Sci-Fi & Fantasy', 5, 8.99, 'Date', 10)")
@@ -27,6 +35,7 @@ with con:
     cur.execute("INSERT INTO Books VALUES(15, 'The Cuban Affair', 'Nelson DeMille', 'https://images-na.ssl-images-amazon.com/images/I/81gFWg3HZXL.jpg', 'Mystery, Thriller & Suspense', 5, 28.99, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(16, 'The Late Show', 'Michael Connelly', 'https://www.michaelconnelly.com/wp-content/uploads/2017/01/TheLateShowUSA.jpg', 'Mystery, Thriller & Suspense', 5, 28, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(17, 'A Column of Fire', 'Ken Follett', 'https://www.geeksofdoom.com/GoD/img/2017/08/a-column-of-fire-book-cover-ken-follett.jpg', 'Mystery, Thriller & Suspense', 5, 15.99, 'Date', 10)")
+<<<<<<< HEAD
     cur.execute("""INSERT INTO Books VALUES(18, "The Handmaid's Tale", 'Margaret Atwood', 'https://ewedit.files.wordpress.com/2017/03/9780525435006.jpg?w=1800&h=2776', 'Literature & Fiction', 5, 9.57, 'Date', 10)""")
     cur.execute("INSERT INTO Books VALUES(19, 'The Third Wife', 'Lisa Jewell', 'http://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781476792194/the-third-wife-9781476792194_hr.jpg', 'Literature & Fiction', 5, 12.8, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(20, 'The Hate U Give', 'Angie Thomas', 'https://m.media-amazon.com/images/S/aplus-media/vc/f043712f-4655-4c8a-b60f-fca1e4c6ca9f.JPG', 'Literature & Fiction', 5, 17.99, 'Date', 10)")
@@ -34,6 +43,15 @@ with con:
     cur.execute("""INSERT INTO Books VALUES(22, 'The Nest', "Cynthia D'Aprix Sweeny", 'http://wtop.com/wp-content/uploads/2016/03/Books-The-Nest-Sweeney-809x1254.jpeg', 'Literature & Fiction', 5, 16.99, 'Date', 10)""")
     cur.execute("INSERT INTO Books VALUES(23, 'The Illustrated Man', 'Ray Bradbury', 'http://highwaytomars.com/wp-content/uploads/2013/08/illustrated_man.jpg', 'Literature & Fiction', 5, 6.77, 'Date', 10)")
     cur.execute("""INSERT INTO Books VALUES(24, "Let's Pretend This Never Happened: A Mostly True Memoir", 'Jenny Lawson', 'https://static1.squarespace.com/static/50a838b5e4b0d63ce68736ac/t/50e20207e4b0a05702b216de/1356988936805/Let%27s+Pretend+cover.jpg?format=750w', 'Humor & Satire', 5, 16, 'Date', 10)""")
+=======
+    cur.execute("INSERT INTO Books VALUES(18, 'The Handmaid's Tale', 'Margaret Atwood', 'https://ewedit.files.wordpress.com/2017/03/9780525435006.jpg?w=1800&h=2776', 'Literature & Fiction', 5, 9.57, 'Date', 10)")
+    cur.execute("INSERT INTO Books VALUES(19, 'The Third Wife', 'Lisa Jewell', 'http://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781476792194/the-third-wife-9781476792194_hr.jpg', 'Literature & Fiction', 5, 12.8, 'Date', 10)")
+    cur.execute("INSERT INTO Books VALUES(20, 'The Hate U Give', 'Angie Thomas', 'https://m.media-amazon.com/images/S/aplus-media/vc/f043712f-4655-4c8a-b60f-fca1e4c6ca9f.JPG', 'Literature & Fiction', 5, 17.99, 'Date', 10)")
+    cur.execute("INSERT INTO Books VALUES(21, 'Everything, Everything', 'Nicola Yoon', 'http://2.bp.blogspot.com/-nKfBook8_9g/VJMM4HkUySI/AAAAAAAAC2A/_oSkXCo0EN8/s1600/EverythingEverythingCover.jpg', 'Literature & Fiction', 5, 12.18, 'Date', 10)")
+    cur.execute("INSERT INTO Books VALUES(22, 'The Nest', 'Cynthia D'Aprix Sweeny', 'http://wtop.com/wp-content/uploads/2016/03/Books-The-Nest-Sweeney-809x1254.jpeg', 'Literature & Fiction', 5, 16.99, 'Date', 10)")
+    cur.execute("INSERT INTO Books VALUES(23, 'The Illustrated Man', 'Ray Bradbury', 'http://highwaytomars.com/wp-content/uploads/2013/08/illustrated_man.jpg', 'Literature & Fiction', 5, 6.77, 'Date', 10)")
+    cur.execute("INSERT INTO Books VALUES(24, 'Let's Pretend This Never Happened: A Mostly True Memoir', 'Jenny Lawson', 'https://static1.squarespace.com/static/50a838b5e4b0d63ce68736ac/t/50e20207e4b0a05702b216de/1356988936805/Let%27s+Pretend+cover.jpg?format=750w', 'Humor & Satire', 5, 16, 'Date', 10)")
+>>>>>>> d9b07e9a41984b8d88becaed61b944c52dbe978f
     cur.execute("INSERT INTO Books VALUES(25, 'Infected', 'Scott Sigler', 'https://scottsigler.com/wp-content/uploads/2011/12/INF-PB-680.jpg', 'Mystery, Thriller & Suspense', 5, 16.99, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(26, 'Fifty Shades of Grey - Chinese Edition', 'E. L. James', 'https://images-na.ssl-images-amazon.com/images/I/81iT0JduCXL.jpg', 'Humor & Satire', 5, 25.42, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(27, 'Animal Farm', 'George Orwell', 'https://images-na.ssl-images-amazon.com/images/I/71RjpVEyscL.jpg', 'Humor & Satire', 5, 6.83, 'Date', 10)")
