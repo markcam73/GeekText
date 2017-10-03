@@ -66,6 +66,7 @@ class BookList extends Component {
           {this.state.filteredBooks.map((book,i)=>
             (i<this.state.currentPage*pageSize && i>=(this.state.currentPage-1)*pageSize?
             <Book key ={i}
+                  id={book.id}
                   title={book.title}
                   author={book.author}
                   imageSrc={book.imageSrc}

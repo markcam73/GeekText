@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import BookList from './Components/bookList'
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class App extends Component {
         <p className="App-intro">
           We have books.
         </p>
-        <BookList/>
+        {this.props.children}
       </div>
     );
   }

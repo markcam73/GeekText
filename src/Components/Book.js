@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
+import {Router, Route, hashHistory} from 'react-router';
 
 class Book extends Component {
   render() {
     return (
-      <div style={styles.divStyle}>
+      <div onClick={()=>{hashHistory.push({pathname: ("/books/" + this.props.id), state: {}}, "/books/" + this.props.id,{})}} style={styles.divStyle}>
         <h1>{this.props.title}</h1>
         <img style={styles.imgStyle}src={this.props.imageSrc}/>
         <p>Author: {this.props.author}</p>
