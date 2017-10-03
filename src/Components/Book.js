@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import {Router, Route, hashHistory} from 'react-router';
+import './book.css';
 
 class Book extends Component {
   render() {
     return (
       <div onClick={()=>{hashHistory.push({pathname: ("/books/" + this.props.id), state: {}}, "/books/" + this.props.id,{})}} style={styles.divStyle}>
         <h1>{this.props.title}</h1>
-        <img style={styles.imgStyle}src={this.props.imageSrc}/>
+        <img style={styles.imgStyle}src={this.props.imageSrc} className="book_cover"/>
         <p>Author: {this.props.author}</p>
         <p>Genre: {this.props.genre}</p>
         <p>Price: {this.props.price}</p>
@@ -28,6 +29,8 @@ var styles ={
     marginBottom: "8px",
     width: "calc(25% - 4px)",
     marginRight: "8px",
+    cursor: "hand",
+    cursor: "pointer",
   },
   imgStyle:{
     width:"100%"
