@@ -9,11 +9,7 @@ with con:
     cur = con.cursor()
     cur.execute("DROP TABLE IF EXISTS Books")
     cur.execute("DROP TABLE IF EXISTS ShoppingCart")
-<<<<<<< HEAD
-    cur.execute("CREATE TABLE Books(Id INT, Title TEXT, Author TEXT, ImageSrc TEXT, Genre TEXT, Rating INT, Price INT, ReleaseDate TEXT, CopiesSold INT)")
-=======
-    cur.execute("CREATE TABLE Books(Id INT, Title TEXT, Author TEXT, ImageSrc TEXT, Genre TEXT, Rating INT, Price DECIMAL(18,2), ReleaseDate TEXT, CopiesSold INT)") 
->>>>>>> 1b58cd808454b01c18437bfd3cee41d79cc5227f
+    cur.execute("CREATE TABLE Books(Id INT, Title TEXT, Author TEXT, ImageSrc TEXT, Genre TEXT, Rating INT, Price DECIMAL(18,2), ReleaseDate TEXT, CopiesSold INT)")
     cur.execute("INSERT INTO Books VALUES(1, 'Battlefield Earth', 'L. Ron Hubbard', 'https://images-na.ssl-images-amazon.com/images/I/814C%2BsV1vJL.jpg', 'Sci-Fi & Fantasy', 5, 7.99, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(2, 'A Game of Thrones: A Song of Ice and Fire (Books 1-4)', 'George R. R. Martin', 'http://achalaupendran.com/wp-content/uploads/2016/06/song-of-ice-and-fire-book-cover.jpg', 'Sci-Fi & Fantasy', 5, 10.08, 'Date', 10)")
     cur.execute("INSERT INTO Books VALUES(3, 'Ready Player One', 'Ernest Cline', 'http://agentpalmer.com/wp-content/uploads/2015/10/Ready-Player-One-Advance-Readers-Edition.png', 'Sci-Fi & Fantasy', 5, 9.99, 'Date', 10)")
