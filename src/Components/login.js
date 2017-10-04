@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Router, Route, hashHistory} from 'react-router';
+import {hashHistory} from 'react-router';
 
 class Login extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Login extends Component {
   }
 
   handleLogin(event) {
-    var successfulLogin = this.state.username!="";
+    var successfulLogin = this.state.username!=="";
     if(successfulLogin){
       hashHistory.push({pathname: ("/books/"), state: {}}, "/books/", {})
     }

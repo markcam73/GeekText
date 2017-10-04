@@ -20,7 +20,7 @@ class BookDetailed extends Component {
     return (
       <div style={styles.divStyle}>
         <h1>{this.state.book.title}</h1>
-        <img style={styles.imgStyle}src={this.state.book.imageSrc}/>
+        <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
         <p>Author: {this.state.book.author}</p>
         <p>Genre: {this.state.book.genre}</p>
         <p>Price: {this.state.book.price}</p>

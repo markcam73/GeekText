@@ -104,7 +104,7 @@ function sortByKey(array, key,order) {
 
 function filterByGenre(array,genre){
   return array.filter(function(book){
-    return book.genre==genre || genre=="All";
+    return book.genre===genre || genre==="All";
   })
 }
 var styles={
