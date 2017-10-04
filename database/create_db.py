@@ -52,3 +52,7 @@ with con:
     cur.execute("CREATE TABLE PaymentInformation(PaymentID INTEGER PRIMARY KEY AUTOINCREMENT, UserID INT, CreditCardNumber TEXT, CreditCardCompany TEXT, ExpirationDate TEXT, SecruityCode TEXT)")
     cur.execute("DROP TABLE IF EXISTS ShippingAddresses")
     cur.execute("CREATE TABLE ShippingAddresses(addressid INTEGER PRIMARY KEY AUTOINCREMENT, userid INT, Street TEXT, City TEXT, State TEXT, Zipcode INT)")
+    cur.execute("DROP TABLE IF EXISTS Comments")
+	cur.execute("CREATE TABLE Comments(BookId INT, UserID INT, Comment TEXT)")
+	cur.execute("DROP TABLE IF EXISTS Ratings")
+	cur.execute("CREATE TABLE Comments(BookId INT, UserID INT, Rating INT)")
