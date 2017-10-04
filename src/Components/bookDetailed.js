@@ -24,13 +24,17 @@ class BookDetailed extends Component {
         <p>Author: {this.state.book.author}</p>
         <p>Genre: {this.state.book.genre}</p>
         <p>Price: {this.state.book.price}</p>
-        <p>Rating: <StarRatingComponent
+        <p>Release date: {this.state.book.releaseDate}</p>
+        <div style={styles.ratingDiv}>
+          <p>Rating: </p>
+          <StarRatingComponent
                     name="rate1"
-                    editing={false}
+                    editing={true}
+                    onStarClick={(newRating,oldRating,name)=>console.log(newRating)}
                     starCount={5}
                     value={this.state.book.rating}
-                    /></p>
-        <p>Release date: {this.state.book.releaseDate}</p>
+                    />
+        </div>
       </div>
     );
   }
@@ -44,6 +48,12 @@ var styles ={
   },
   imgStyle:{
     width:"100%"
+  },
+  ratingDiv:{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height:"19px"
   }
 }
 export default BookDetailed;

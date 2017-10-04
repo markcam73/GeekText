@@ -12,13 +12,16 @@ class Book extends Component {
         <p>Author: {this.props.author}</p>
         <p>Genre: {this.props.genre}</p>
         <p>Price: {this.props.price}</p>
-        <p>Rating: <StarRatingComponent
+        <p>Release date: {this.props.releaseDate}</p>
+        <div style={styles.ratingDiv}>
+          <p>Rating: </p>
+          <StarRatingComponent
                     name="rate1"
                     editing={false}
                     starCount={5}
                     value={this.props.rating}
-                    /></p>
-        <p>Release date: {this.props.releaseDate}</p>
+                    />
+        </div>
       </div>
     );
   }
@@ -34,6 +37,12 @@ var styles ={
   },
   imgStyle:{
     width:"100%"
+  },
+  ratingDiv:{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height:"19px"
   }
 }
 export default Book;
