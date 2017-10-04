@@ -7,10 +7,12 @@ import { Router, Route, hashHistory} from 'react-router'
 import BookList from './Components/bookList'
 import BookDetailed from './Components/bookDetailed'
 import Login from './Components/login';
+import Home from './Components/home';
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={Login}/>
                   <Route component={App}>
+                    <Route path="/home" component={Home}/>
                     <Route path="/books" component={BookList}/>
                     <Route path="/books/:id" component={BookDetailed}/>
                   </Route>
