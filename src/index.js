@@ -8,6 +8,7 @@ import BookList from './Components/bookList'
 import BookDetailed from './Components/bookDetailed'
 import Login from './Components/login';
 import Home from './Components/home';
+import Profile from './Components/Profile';
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={Login}/>
@@ -15,6 +16,7 @@ ReactDOM.render(<Router history={hashHistory}>
                     <Route path="/home" component={Home}/>
                     <Route path="/books" component={BookList}/>
                     <Route path="/books/:id" component={BookDetailed}/>
+                    <Route path="/profile" componenet={Profile}/>
                   </Route>
                 </Router>, document.getElementById('root'));
 registerServiceWorker();

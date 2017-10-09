@@ -11,6 +11,7 @@ class App extends Component {
         <div className="App-header">
         <button onClick={()=>hashHistory.push({pathname: ("/home/"), state: {}}, "/home/", {})}>Home</button>
         <button onClick={()=>hashHistory.push({pathname: ("/books/"), state: {}}, "/books/", {})}>Books</button>
+        <button onClick={()=>hashHistory.push({pathname: ("/profile/"), state: {}}, "/profile/", {})}>Profile</button>
         </div>
         {this.props.children}
       </div>

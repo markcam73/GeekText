@@ -54,5 +54,19 @@ def get_book(book_ID):
             "price": row["Price"],
             "releaseDate": row["ReleaseDate"]
         }
+@app.route("/profile")
+def profile():
+    with con:
+        con.row_factory = lite.Row
 
+        cur.con.cursor()
+        cur.execute("SELECT * FROM Users")
+        to_return = []
+        to_return.apped({
+            "FirstName": row["FirstName"],
+            "LastName": row["LastName"],
+            "username": row["username"],
+            "Email": row["Email"],
+            "HomeAddress": row["HomeAddress"]
+        })
         return jsonify(to_return)
