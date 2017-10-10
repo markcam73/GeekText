@@ -48,7 +48,7 @@ with con:
     cur.execute("INSERT INTO ShoppingCart VALUES(124, 2, 1)")
     cur.execute("DROP TABLE IF EXISTS Users")
     cur.execute("CREATE TABLE Users(UserID INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, LastName TEXT, HomeAddress TEXT, Email TEXT, username TEXT, password TEXT)")
-    cur.execute("INSERT INTO Users VALUES('John', 'Doe','111 W 1st Ave','dummy@dummy.com','user1','p@ssw0rd1')")
+    cur.execute("INSERT INTO Users VALUES(1, 'John', 'Doe','111 W 1st Ave','dummy@dummy.com','user1','p@ssw0rd1')")
     cur.execute("DROP TABLE IF EXISTS PaymentInformation")
     cur.execute("CREATE TABLE PaymentInformation(PaymentID INTEGER PRIMARY KEY AUTOINCREMENT, UserID INT, CreditCardNumber TEXT, CreditCardCompany TEXT, ExpirationDate TEXT, SecruityCode TEXT)")
     cur.execute("DROP TABLE IF EXISTS ShippingAddresses")
