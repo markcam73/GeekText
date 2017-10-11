@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
 import {hashHistory} from 'react-router';
 
-
 class Profile extends Component {
+  constructor(supplied) {
+    super(supplied);
+    this.state={
+      user:{}
+    }
+  }
+  componentWillMount(){
+    var username = this.props.params.username;
+    console.log(username);
+    var _this = this;
+    fetch('http://localhost:5000/profile/' + username).then((resp) => resp.json()).then(function(data){
+      _this.setState({user:data});
+    })
+  }
   render() {
     return (
-      <div onClick={()=>{hashHistory.push({pathname: ("/profile/" + this.props.id), state: {}}, "/profile/" + this.props.id,{})}}>
-        <h1>{this.props.FirstName} + " " + {this.props.LastName} + " Profile"</h1>
-        <p>Username: {this.props.username}</p>
-        <p>Email: {this.props.Email}</p>
-        <p>Address: {this.props.HomeAddress}</p>
+      <div style={styles.divStyle}>
+        <h1>Profile</h1>
+        <p>Username: {this.state.user.username}</p>
+        <p>FirstName: {this.state.user.firstName}</p>
+        <p>LastName: {this.state.user.lastName}</p>
+        <p>Email: {this.state.user.email}</p>
+        <p>Address: {this.state.user.homeAddress}</p>
       </div>
     );
   }

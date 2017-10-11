@@ -16,7 +16,7 @@ ReactDOM.render(<Router history={hashHistory}>
                     <Route path="/home" component={Home}/>
                     <Route path="/books" component={BookList}/>
                     <Route path="/books/:id" component={BookDetailed}/>
-                    <Route path="/profile" component={Profile}/>
+                    <Route path="/profile/:username" component={Profile}/>
                   </Route>
                 </Router>, document.getElementById('root'));
 registerServiceWorker();

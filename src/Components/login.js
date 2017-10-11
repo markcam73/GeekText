@@ -17,11 +17,10 @@ class Login extends Component {
   handlePasswordChange(event) {
     this.setState({password: event.target.value});
   }
-
   handleLogin(event) {
     var successfulLogin = this.state.username!=="";
     if(successfulLogin){
-      hashHistory.push({pathname: ("/books/"), state: {}}, "/books/", {})
+      hashHistory.push({pathname: ("/profile/" + this.state.username), state:{}}, "/profile/" + this.state.username, {})
     }
     event.preventDefault();
   }

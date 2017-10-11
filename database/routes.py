@@ -62,7 +62,7 @@ def profile(username):
         con.row_factory = lite.Row
 
         cur = con.cursor()
-        cur.execute("SELECT * FROM Users WHERE username=?", (username,))
+        cur.execute("SELECT * FROM Users WHERE username=?", [username])
         row = cur.fetchone()
 
         to_return ={
