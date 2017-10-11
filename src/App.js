@@ -9,9 +9,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-        <button onClick={()=>hashHistory.push({pathname: ("/home/"), state: {}}, "/home/", {})}>Home</button>
-        <button onClick={()=>hashHistory.push({pathname: ("/books/"), state: {}}, "/books/", {})}>Books</button>
-        <button onClick={()=>hashHistory.push({pathname: ("/profile/"), state: {}}, "/profile/", {})}>Profile</button>
+        <button onClick={()=>hashHistory.push({pathname: ("/home/"), state: {username:this.props.location.state.username}}, "/home/", {})}>Home</button>
+        <button onClick={()=>hashHistory.push({pathname: ("/books/"), state: {username:this.props.location.state.username}}, "/books/", {})}>Books</button>
+        <button onClick={()=>hashHistory.push({pathname: ("/profile/"+ this.props.location.state.username), state: {username:this.props.location.state.username}}, "/profile/" + this.props.location.state.username, {})}>Profile</button>
         </div>
         {this.props.children}
       </div>

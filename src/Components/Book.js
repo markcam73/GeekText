@@ -6,7 +6,7 @@ import './book.css';
 class Book extends Component {
   render() {
     return (
-      <div onClick={()=>{hashHistory.push({pathname: ("/books/" + this.props.id), state: {}}, "/books/" + this.props.id,{})}} style={styles.divStyle}>
+      <div onClick={()=>{hashHistory.push({pathname: ("/books/" + this.props.id), state: {username:this.props.location.state.username}}, "/books/" + this.props.id,{})}} style={styles.divStyle}>
         <h1>{this.props.title}</h1>
         <img style={styles.imgStyle}src={this.props.imageSrc} alt="cover" className="book_cover"/>
         <p>Author: {this.props.author}</p>

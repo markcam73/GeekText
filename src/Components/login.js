@@ -20,7 +20,7 @@ class Login extends Component {
   handleLogin(event) {
     var successfulLogin = this.state.username!=="";
     if(successfulLogin){
-      hashHistory.push({pathname: ("/profile/" + this.state.username), state:{}}, "/profile/" + this.state.username, {})
+      hashHistory.push({pathname: ("/home/"), state:{username:this.state.username}}, "/home/", {})
     }
     event.preventDefault();
   }
