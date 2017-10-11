@@ -5,6 +5,14 @@ import {hashHistory} from 'react-router';
 
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    if(this.props.location.state){
+
+    }else{
+      hashHistory.push({pathname: ("/"), state: {}}, "/", {})
+    }
+  }
   render() {
     return (
       <div className="App">
