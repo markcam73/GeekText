@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Book from './Book.js';
 import PubSub from 'pubsub-js';
 
 class ShopCart extends Component{
@@ -14,12 +13,17 @@ class ShopCart extends Component{
         this.countTotal = this.countTotal.bind(this);
         this.addItem = this.addItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
-        PubSub.subscribe('cart.added', this.addItem);
-        PubSub.subscribe('cart.removed', this.removeItem);
-
 
     }
-
+    
+    componentDidMount() {
+        this.token = PubSub.subscribe('cart.added', this.addItem)
+        this.token = PubSub.subscribe('cart.removed', this.removeItem)
+    }
+    componentWillUnmount(){
+        PubSub.unsubscribe(this.token)
+    }
+    
     addItem (e, item) {
         var items = this.state.items;
         items.push(item)
@@ -60,9 +64,10 @@ class ShopCart extends Component{
     render(){
         var items = this.state.items.map(function(item) {
             return (
-                <li key={item.id} className="cart-item">
-                    <span> {item.name} </span>
-                    <span> $ {item.price}</span>
+                <li key={item.id} style = {{marginBottom: '100px'}}>
+                    <span style = {{float: 'left'}}><img src={item.imageSrc} style={{width: 50, height: 70}} alt= "shop_cover"/></span>
+                    <span style = {{justifyContent: 'center'}}> {item.title} </span>
+                    <span style = {{float: 'right'}}> $ {item.price}</span>
                 </li>
             )
         });
@@ -80,7 +85,7 @@ class ShopCart extends Component{
                 <div className="panel-body">
                     <h5>Shopping Cart</h5>
                     {items.length > 0 ? body : empty}
-                    <div>Total: ${this.state.total} </div>
+                    <div style = {{float: 'right'}}>Total: ${this.state.total} </div>
                 </div>
             </div>
         );
@@ -90,8 +95,9 @@ class ShopCart extends Component{
 
 var styles ={
     divStyle:{
+      marginTop: '50px',
       marginBottom: "3px",
-      justifyContent: "right"
+      justifyContent: "space-around"
     }
 }
 export default ShopCart;

@@ -7,10 +7,10 @@ class Bookpage extends Component{
         return(
             <div className="container">
                 <div className="row">
-                    <div className="col-md-10">
+                    <div className="col-md-8">
                         <BookList />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <Shopcart />
                     </div>
                 </div>

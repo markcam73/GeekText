@@ -11,11 +11,11 @@ class Book extends Component {
     this.state = {added: false};
     this.addItemToCart = this.addItemToCart.bind(this);
   }
-
+  
   addItemToCart (event) {
     if(!this.state.added) {
     // add
-      PubSub.publish('cart.added', this.props.title, this.props.price);
+      PubSub.publish('cart.added', this.props);
     }
     else {
     // remove
