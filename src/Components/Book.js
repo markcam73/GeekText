@@ -37,6 +37,7 @@ class Book extends Component {
             <p>Genre: {this.props.genre}</p>
             <p>Price: {this.props.price}</p>
             <p>Release date: {this.props.releaseDate}</p>
+            <p>Description: {this.props.description}</p>
             <div style={styles.ratingDiv}>
               <p>Rating: </p>
               <StarRatingComponent
