@@ -25,7 +25,6 @@ class BookDetailed extends Component {
         <p>Genre: {this.state.book.genre}</p>
         <p>Price: {this.state.book.price}</p>
         <p>Release date: {this.state.book.releaseDate}</p>
-        <p>Description: {this.state.book.description}</p>
         <div style={styles.ratingDiv}>
           <p>Rating: </p>
           <StarRatingComponent
