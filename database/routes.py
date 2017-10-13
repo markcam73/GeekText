@@ -32,7 +32,7 @@ def books():
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description:: row["Descrption]
+                "description": row["Descrption"]
             })
         return jsonify(to_return)
 @app.route("/books/<book_ID>")
