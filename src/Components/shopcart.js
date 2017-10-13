@@ -5,48 +5,53 @@ import PubSub from 'pubsub-js';
 class ShopCart extends Component{
     constructor(props) {
         super(props);
-        
+
         this.state = {
           total: 0,
           items: []
         };
 
+        this.countTotal = this.countTotal.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         PubSub.subscribe('cart.added', this.addItem);
         PubSub.subscribe('cart.removed', this.removeItem);
-          
-        this.countTotal = this.countTotal.bind(this);
+
+
     }
-    
+
     addItem (e, item) {
-        this.state.items.push(item);
+        var items = this.state.items;
+        items.push(item)
+        this.setState({items: items})
         this.forceUpdate();
-  
+
         this.countTotal();
     }
-  
+
     removeItem (e, itemId) {
         var itemIndexInArray;
-  
+
         this.state.items.some(function(item, index) {
           if(item.id === itemId) {
             itemIndexInArray = index;
             return true;
           }
         });
-  
+
         this.state.items.splice(itemIndexInArray, 1);
         this.forceUpdate();
-  
+
         this.countTotal();
     }
-    
+
     countTotal() {
         let totalPrice = 0;
-        
-        this.props.items.forEach(function (item) {
+
+        this.state.items.forEach(function (item) {
           totalPrice += +parseFloat(item.price);
         });
-        
+
         this.setState({
           "total": totalPrice.toFixed(2)
         });

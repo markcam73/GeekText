@@ -15,7 +15,7 @@ class Bookpage extends Component{
                     </div>
                 </div>
             </div>
-        ); 
+        );
     }
 }
 export default Bookpage;
