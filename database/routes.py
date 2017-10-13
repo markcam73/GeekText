@@ -52,8 +52,7 @@ def get_book(book_ID):
             "genre": row["Genre"],
             "rating": row["Rating"],
             "price": row["Price"],
-            "releaseDate": row["ReleaseDate"],
-            "description": row["Description"]
+            "releaseDate": row["ReleaseDate"]
         }
         return jsonify(to_return)
 
