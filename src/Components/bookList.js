@@ -55,6 +55,7 @@ class BookList extends Component {
             <option value="price">Price</option>
             <option value="rating">Rating</option>
             <option value="releaseDate">Release Date</option>
+            <option value="description">Description</option>
           </select>
           <p>Order:</p>
           <select style={styles.selectStyle} defaultValue={this.state.order} onChange={this.handleOrderChange}>
@@ -74,6 +75,7 @@ class BookList extends Component {
                   rating={book.rating}
                   price={book.price}
                   releaseDate={book.releaseDate}
+                  description={book.description}
                   /> : null)
           )}
 
