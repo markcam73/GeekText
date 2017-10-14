@@ -74,6 +74,7 @@ class BookList extends Component {
                   rating={book.rating}
                   price={book.price}
                   releaseDate={book.releaseDate}
+                  description={book.description}
                   /> : null)
           )}
 

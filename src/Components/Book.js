@@ -11,7 +11,7 @@ class Book extends Component {
     this.state = {added: false};
     this.addItemToCart = this.addItemToCart.bind(this);
   }
-  
+
   addItemToCart (event) {
     if(!this.state.added) {
     // add
