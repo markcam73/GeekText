@@ -1,16 +1,32 @@
 from flask import Flask
 from flask import jsonify
+from flask import request
 app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
 import sqlite3 as lite
 import os
+import jwt
 
 con = lite.connect(os.path.realpath(__file__)[0:os.path.realpath(__file__).find('routes.py')] + 'geektext.db')
 
 @app.route("/")
 def hello():
     return "Hello World!"
+
+@app.route('/login', methods=['POST'])
+def login():
+    user_info = request.json
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?", [user_info["username"]])
+        row = cur.fetchone()
+        if row and row["password"] == user_info["password"]:
+            return jsonify({"status": 200, "token": jwt.encode({'username': user_info["password"]}, 'secret', algorithm='HS256')})
+        else:
+            return jsonify({"status": 401})
 
 @app.route("/books")
 def books():
@@ -54,7 +70,8 @@ def get_book(book_ID):
             "genre": row["Genre"],
             "rating": row["Rating"],
             "price": row["Price"],
-            "releaseDate": row["ReleaseDate"],                "description": row["Description"]
+            "releaseDate": row["ReleaseDate"],
+            "description": row["Description"]
 
         }
         return jsonify(to_return)
