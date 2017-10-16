@@ -3,6 +3,8 @@ from flask import jsonify
 from flask import request
 app = Flask(__name__)
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt(app)
 CORS(app)
 import sqlite3 as lite
 import os
@@ -23,7 +25,7 @@ def login():
         cur = con.cursor()
         cur.execute("SELECT * FROM Users WHERE username=?", [user_info["username"]])
         row = cur.fetchone()
-        if row and row["password"] == user_info["password"]:
+        if row and bcrypt.check_password_hash(row["password"], user_info["password"]):
             return jsonify({"status": 200, "token": jwt.encode({'username': user_info["username"]}, 'secret', algorithm='HS256')})
         else:
             return jsonify({"status": 401})
