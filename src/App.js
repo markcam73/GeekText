@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {hashHistory} from 'react-router';
 
@@ -25,7 +24,7 @@ class App extends Component {
           body: data
       }).then((res) => {
           res.json().then(function(jsonRes){
-            if (jsonRes.status==200){
+            if (jsonRes.status===200){
               _this.setState({username: jsonRes.username})
             }else{
 

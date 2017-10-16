@@ -40,7 +40,7 @@ class Login extends Component {
         body: data
     }).then((res) => {
         res.json().then(function(jsonRes){
-          if (jsonRes.status==200){
+          if (jsonRes.status===200){
             window.sessionStorage.token=jsonRes.token;
             hashHistory.push({pathname: ("/home/"), state:{username:_this.state.username}}, "/home/", {})
           }else{
