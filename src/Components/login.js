@@ -4,13 +4,19 @@ import {hashHistory} from 'react-router';
 class Login extends Component {
   constructor(props) {
     super(props);
+
     this.state = {username: '', password: '', incorrect:false};
 
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-  }
 
+  }
+  componentDidMount(){
+    if(window.sessionStorage.token){
+      hashHistory.push({pathname: ("/home/"), state: {}}, "/home/", {})
+    }
+  }
   handleUsernameChange(event) {
     this.setState({username: event.target.value});
   }

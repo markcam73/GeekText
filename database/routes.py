@@ -24,9 +24,32 @@ def login():
         cur.execute("SELECT * FROM Users WHERE username=?", [user_info["username"]])
         row = cur.fetchone()
         if row and row["password"] == user_info["password"]:
-            return jsonify({"status": 200, "token": jwt.encode({'username': user_info["password"]}, 'secret', algorithm='HS256')})
+            return jsonify({"status": 200, "token": jwt.encode({'username': user_info["username"]}, 'secret', algorithm='HS256')})
         else:
             return jsonify({"status": 401})
+
+@app.route('/profile/mine', methods=['POST'])
+def my_info():
+    user_token = request.json["token"]
+    username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+    print username
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?", [username])
+        row = cur.fetchone()
+
+        to_return ={
+            "status": 200,
+            "userID": row["UserID"],
+            "firstName": row["FirstName"],
+            "lastName": row["LastName"],
+            "username": row["username"],
+            "email": row["Email"],
+            "homeAddress": row["HomeAddress"]
+        }
+        return jsonify(to_return)
 
 @app.route("/books")
 def books():
