@@ -77,6 +77,32 @@ def books():
 
             })
         return jsonify(to_return)
+
+@app.route("/books/top")
+def top_books():
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books ORDER BY CopiesSold DESC LIMIT 5")
+
+        rows = cur.fetchall()
+        to_return = []
+        for row in rows:
+            to_return.append({
+                "id": row["Id"],
+                "title": row["Title"],
+                "imageSrc": row["ImageSrc"],
+                "author": row["Author"],
+                "genre": row["Genre"],
+                "rating": row["Rating"],
+                "price": row["Price"],
+                "releaseDate": row["ReleaseDate"],
+                "description": row["Description"]
+
+            })
+        return jsonify(to_return)
+
 @app.route("/books/<book_ID>")
 def get_book(book_ID):
     with con:
