@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import {hashHistory} from 'react-router';
 import API from './API';
 
 class App extends Component {

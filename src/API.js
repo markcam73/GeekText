@@ -1,5 +1,5 @@
 import 'whatwg-fetch';//important for getting it to work on safari.
-import {Router, Route, hashHistory} from 'react-router';
+import {hashHistory} from 'react-router';
 var BASE_URL="http://localhost:5000"
 
 var API={

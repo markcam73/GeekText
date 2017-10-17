@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {hashHistory} from 'react-router';
 import API from '../API';
 
 class Login extends Component {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
-import {hashHistory} from 'react-router';
 import './book.css';
 import PubSub from 'pubsub-js';
 import API from '../API';
