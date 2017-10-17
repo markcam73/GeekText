@@ -21,6 +21,16 @@ var API={
       .catch((err) => rej(err))
     });
   },
+  getRequest(route){
+    return new Promise((res, rej) => {
+      fetch(BASE_URL + route).then((resp) => {
+        resp.json()
+        .then((json) => res(json))
+        .catch((err) => rej(err))
+      })
+      .catch((err) => rej(err))
+    });
+  },
   changePath: function(pathname, state){
       hashHistory.push({pathname: (pathname), state: state}, pathname,{});
   },

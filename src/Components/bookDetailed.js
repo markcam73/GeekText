@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
-
+import API from '../API';
 class BookDetailed extends Component {
   constructor(supplied) {
       super(supplied);
@@ -12,7 +12,7 @@ class BookDetailed extends Component {
     var bookID = this.props.params.id;
     console.log(bookID);
     var _this = this;
-    fetch('http://localhost:5000/books/' + bookID).then((resp) => resp.json()).then(function(data){
+    API.getRequest('/books/' + bookID).then(function(data){
       _this.setState({book:data});
     })
   }
