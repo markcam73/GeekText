@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {hashHistory} from 'react-router';
+import API from '../API';
 
 class Login extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Login extends Component {
   }
   componentDidMount(){
     if(window.sessionStorage.token){
-      hashHistory.push({pathname: ("/home/"), state: {}}, "/home/", {})
+      API.changePath("/home/",{})
     }
   }
   handleUsernameChange(event) {
@@ -28,30 +29,15 @@ class Login extends Component {
         username: this.state.username,
         password: this.state.password
     };
-
-    var data = JSON.stringify( payload );
     var _this = this;
-    fetch("http://localhost:5000/login", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: data
-    }).then((res) => {
-        res.json().then(function(jsonRes){
+    API.postRequest(payload,'/login').then((jsonRes) => {
           if (jsonRes.status===200){
             window.sessionStorage.token=jsonRes.token;
-            hashHistory.push({pathname: ("/home/"), state:{username:_this.state.username}}, "/home/", {})
+            API.changePath("/home/",{username:_this.state.username})
           }else{
             _this.setState({incorrect: true});
           }
-        });
     })
-    // var successfulLogin = this.state.username!=="";
-    // if(successfulLogin){
-    //   hashHistory.push({pathname: ("/home/"), state:{username:this.state.username}}, "/home/", {})
-    // }
     event.preventDefault();
   }
 
