@@ -6,6 +6,8 @@ dependencies
 * Flask
 * flask_cors
 * react
+* PyJWT
+* flask-bcrypt
 
 installation instructions
 After cloning the repository:
@@ -13,6 +15,8 @@ After cloning the repository:
 npm install
 pip install flask
 pip install flask_cors
+pip install PyJWT
+pip install flask-bcrypt
 ```
 First run the backend server (Unix/Linux/Mac):
 ```

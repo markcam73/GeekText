@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {hashHistory} from 'react-router';
-
+import API from './API';
 
 class App extends Component {
   constructor(props){
     super(props)
     if(this.props.location.state){
+      this.state={username:this.props.location.state.username}
+    }else if(window.sessionStorage.token) {
+      var payload = {
+          token: window.sessionStorage.token
+      };
+      var _this = this;
+      API.postRequest(payload, '/profile/mine').then((jsonRes) => {
+            if (jsonRes.status===200){
+              _this.setState({username: jsonRes.username})
+            }else{
 
+            }
+      })
     }else{
-      hashHistory.push({pathname: ("/"), state: {}}, "/", {})
+      API.changePath("/",{})
     }
   }
   render() {
     return (
       <div className="App">
         <div className="App-header">
-        <button onClick={()=>hashHistory.push({pathname: ("/home/"), state: {username:this.props.location.state.username}}, "/home/", {})}>Home</button>
-        <button onClick={()=>hashHistory.push({pathname: ("/books/"), state: {username:this.props.location.state.username}}, "/books/", {})}>Books</button>
-        <button onClick={()=>hashHistory.push({pathname: ("/profile/"+ this.props.location.state.username), state: {username:this.props.location.state.username}}, "/profile/" + this.props.location.state.username, {})}>Profile</button>
+        <button onClick={()=>API.changePath("/home/",{username:this.state.username})}>Home</button>
+        <button onClick={()=>API.changePath("/books/",{username:this.state.username})}>Books</button>
+        <button onClick={()=>API.changePath("/profile/" + this.state.username,{username:this.state.username})}>Profile</button>
         </div>
         {this.props.children}
       </div>

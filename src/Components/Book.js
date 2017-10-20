@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
-import {hashHistory} from 'react-router';
 import './book.css';
 import PubSub from 'pubsub-js';
+import API from '../API';
 
 class Book extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class Book extends Component {
   render() {
     return (
       <div style={styles.divStyle}>
-        <div onClick={()=>{hashHistory.push({pathname: ("/books/" + this.props.id), state: {}}, "/books/" + this.props.id,{})}}>
+        <div onClick={()=>API.changePath("/books/" + this.props.id,{})}>
             <h1>{this.props.title}</h1>
             <img style={styles.imgStyle}src={this.props.imageSrc} alt="cover" className="book_cover"/>
             <p>Author: {this.props.author}</p>

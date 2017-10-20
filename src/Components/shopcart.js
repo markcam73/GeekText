@@ -15,7 +15,7 @@ class ShopCart extends Component{
         this.removeItem = this.removeItem.bind(this);
 
     }
-    
+
     componentDidMount() {
         this.token = PubSub.subscribe('cart.added', this.addItem)
         this.token = PubSub.subscribe('cart.removed', this.removeItem)
@@ -23,7 +23,7 @@ class ShopCart extends Component{
     componentWillUnmount(){
         PubSub.unsubscribe(this.token)
     }
-    
+
     addItem (e, item) {
         var items = this.state.items;
         items.push(item)
@@ -40,6 +40,8 @@ class ShopCart extends Component{
           if(item.id === itemId) {
             itemIndexInArray = index;
             return true;
+          }else{
+            return false;
           }
         });
 

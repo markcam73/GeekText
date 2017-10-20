@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Book from './Book.js';
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
+import API from '../API'
 const pageSize=9;
 
 class BookList extends Component {
@@ -15,7 +16,7 @@ class BookList extends Component {
 
   componentDidMount(){
     var _this = this
-    fetch('http://localhost:5000/books').then((resp) => resp.json()).then(function(data){
+    API.getRequest('/books').then(function(data){
       _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
     })
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {hashHistory} from 'react-router';
-
+import API from '../API';
 class Profile extends Component {
   constructor(supplied) {
     super(supplied);
@@ -12,7 +11,7 @@ class Profile extends Component {
     var username = this.props.params.username;
     console.log(username);
     var _this = this;
-    fetch('http://localhost:5000/profile/' + username).then((resp) => resp.json()).then(function(data){
+    API.getRequest('/profile/' + username).then(function(data){
       _this.setState({user:data});
     })
   }
