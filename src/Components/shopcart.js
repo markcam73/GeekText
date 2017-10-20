@@ -64,10 +64,9 @@ class ShopCart extends Component{
     render(){
         var items = this.state.items.map(function(item) {
             return (
-                <li key={item.id} style = {{marginBottom: '100px'}}>
-                    <span style = {{float: 'left'}}><img src={item.imageSrc} style={{width: 50, height: 70}} alt= "shop_cover"/></span>
-                    <span style = {{justifyContent: 'center'}}> {item.title} </span>
-                    <span style = {{float: 'right'}}> $ {item.price}</span>
+                <li key={item.id} style ={{listStyle: 'none'}}>
+                    <span> {item.title} </span>
+                    <span style = {{float: 'right'}}>${item.price}</span>
                 </li>
             )
         });
@@ -81,7 +80,7 @@ class ShopCart extends Component{
         var empty = <div className="alert alert-info">Cart is empty</div>;
 
         return (
-            <div className="panel panel-default">
+            <div className="panel panel-default" style = {{position: 'fixed'}}>
                 <div className="panel-body">
                     <h5>Shopping Cart</h5>
                     {items.length > 0 ? body : empty}
@@ -92,12 +91,4 @@ class ShopCart extends Component{
     }
 }
 
-
-var styles ={
-    divStyle:{
-      marginTop: '50px',
-      marginBottom: "3px",
-      justifyContent: "space-around"
-    }
-}
 export default ShopCart;
