@@ -43,11 +43,11 @@ class BookList extends Component {
           <p> Browse By genre:</p>
           <select style={styles.selectStyle} defaultValue={this.state.genre} onChange={this.handleGenreChange}>
             <option value="All">All</option>
-            <option value="Biography">Biography</option>
-            <option value="Action">Action</option>
-            <option value="Drama">Drama</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Comic">Comic</option>
+            <option value="Romance">Romance</option>
+            <option value="Sci-Fi & Fantasy">Sci-Fi & Fantasy</option>
+            <option value="Mystery, Thriller & Suspense">Mystery, Thriller & Suspense</option>
+            <option value="Literature & Fiction">Literature & Fiction</option>
+            <option value="Humor & Satire">Humor & Satire</option>
           </select>
           <p> Sort By:</p>
           <select style={styles.selectStyle} defaultValue={this.state.sort} onChange={this.handleSortChange}>
