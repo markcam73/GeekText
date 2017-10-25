@@ -21,7 +21,7 @@ class BookDetailed extends Component {
       <div style={styles.divStyle}>
         <h1>{this.state.book.title}</h1>
         <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
-        <p>Author: {this.state.book.author}</p>
+        <p>Author: <a href={"/#/books/author/" + encodeURIComponent(this.state.book.author)}>{this.state.book.author}</a></p>
         <p>Genre: {this.state.book.genre}</p>
         <p>Price: {this.state.book.price}</p>
         <p>Release date: {this.state.book.releaseDate}</p>

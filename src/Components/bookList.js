@@ -16,9 +16,16 @@ class BookList extends Component {
 
   componentDidMount(){
     var _this = this
-    API.getRequest('/books').then(function(data){
-      _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
-    })
+    if(this.props.author){
+      API.getRequest('/books/author/' + this.props.author).then(function(data){
+        _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
+      })
+    }else{
+      API.getRequest('/books').then(function(data){
+        _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
+      })
+    }
+
   }
 
   handleSortChange(event) {
