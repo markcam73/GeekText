@@ -126,6 +126,30 @@ def get_books_by_author(author):
 
             })
         return jsonify(to_return)
+@app.route("/books/genre/<genre>")
+def get_books_in_genre(genre):
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books WHERE Genre=?", [genre])
+
+        rows = cur.fetchall()
+        to_return = []
+        for row in rows:
+            to_return.append({
+                "id": row["Id"],
+                "title": row["Title"],
+                "imageSrc": row["ImageSrc"],
+                "author": row["Author"],
+                "genre": row["Genre"],
+                "rating": row["Rating"],
+                "price": row["Price"],
+                "releaseDate": row["ReleaseDate"],
+                "description": row["Description"]
+
+            })
+        return jsonify(to_return)
 @app.route("/books/<book_ID>")
 def get_book(book_ID):
     with con:
