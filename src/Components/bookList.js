@@ -47,7 +47,7 @@ class BookList extends Component {
     return (
       <div>
         <div style={styles.sortDivStyle}>
-          <p> Browse By genre:</p>
+          <p style={styles.selectLabelStyle}> Browse By genre:</p>
           <select style={styles.selectStyle} defaultValue={this.state.genre} onChange={this.handleGenreChange}>
             <option value="All">All</option>
             <option value="Romance">Romance</option>
@@ -56,7 +56,7 @@ class BookList extends Component {
             <option value="Literature & Fiction">Literature & Fiction</option>
             <option value="Humor & Satire">Humor & Satire</option>
           </select>
-          <p> Sort By:</p>
+          <p style={styles.selectLabelStyle}> Sort By:</p>
           <select style={styles.selectStyle} defaultValue={this.state.sort} onChange={this.handleSortChange}>
             <option value="title">Title</option>
             <option value="author">Author</option>
@@ -64,7 +64,7 @@ class BookList extends Component {
             <option value="rating">Rating</option>
             <option value="releaseDate">Release Date</option>
           </select>
-          <p>Order:</p>
+          <p style={styles.selectLabelStyle}>Order:</p>
           <select style={styles.selectStyle} defaultValue={this.state.order} onChange={this.handleOrderChange}>
             <option value={1}>Ascending</option>
             <option value={-1}>Descending</option>
@@ -131,7 +131,11 @@ var styles={
   selectStyle:{
     marginLeft:"2px",
     marginRight: "10px",
-    height:"1.25em",
+    height:"1.8em",
+  },
+  selectLabelStyle:{
+    marginTop:"auto",
+    marginBottom:"auto"
   }
 }
 export default BookList;
