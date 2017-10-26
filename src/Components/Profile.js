@@ -4,7 +4,10 @@ class Profile extends Component {
   constructor(supplied) {
     super(supplied);
     this.state={
-      user:{}
+      user:{
+          creditCards:[],
+          shippingAddresses: []
+        }
     }
   }
   componentWillMount(){
