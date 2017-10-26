@@ -130,18 +130,45 @@ def get_book(book_ID):
 @app.route("/profile/<username>")
 def profile(username):
     with con:
+        addresses = []
+        cards = []
+
         con.row_factory = lite.Row
 
         cur = con.cursor()
+
+        cur.execute("SELECT sp.* FROM ShippingAddresses as sp INNER JOIN Users as u ON u.userid = sp.userid where u.username=?", [username])
+        row = cur.fetchall()
+        for rows in row:
+            addresses.append({
+                "street": rows["Street"],
+                "city": rows["City"],
+                "state": rows["State"],
+                "zip": rows["Zipcode"]
+            })
+
+        cur.execute("SELECT pa.* FROM PaymentInformation as pa INNER JOIN Users as u ON u.userid = pa.userid where u.username=?", [username])
+        row = cur.fetchall()
+        for rows in row:
+            cards.append({
+                "cardNumber": rows["CreditCardNumber"],
+                "cardCompany": rows["CreditCardCompany"],
+                "expirationDate": rows["expirationDate"]
+            })
+
         cur.execute("SELECT * FROM Users WHERE username=?", [username])
         row = cur.fetchone()
-
         to_return ={
             "userID": row["UserID"],
             "firstName": row["FirstName"],
             "lastName": row["LastName"],
             "username": row["username"],
             "email": row["Email"],
-            "homeAddress": row["HomeAddress"]
+            "homeAddress": row["HomeAddress"],
+            "shippingAddresses": addresses,
+            "creditCards": cards
         }
+
+
+
         return jsonify(to_return)
