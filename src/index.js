@@ -10,6 +10,8 @@ import Home from './Components/home';
 import Profile from './Components/Profile';
 import BookList from'./Components/bookList';
 import Shopcart from './Components/shopcart';
+import Bookpage from './Components/bookpage';
+import BookpageByAuthor from './Components/BooksByAuthor';
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={Login}/>
@@ -19,6 +21,10 @@ ReactDOM.render(<Router history={hashHistory}>
                     <Route path="/books/:id" component={BookDetailed}/>
                     <Route path="/profile/:username" component={Profile}/>
                     <Route path="/shopcart" component={Shopcart}/>
+                    <Route path="/books" component={Bookpage}/>
+                    <Route path="/books/author/:author" component={BookpageByAuthor}/>
+                    <Route path="/books/:id" component={BookDetailed}/>
+                    <Route path="/profile" component={Profile}/>
                   </Route>
                 </Router>, document.getElementById('root'));
 registerServiceWorker();

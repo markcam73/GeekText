@@ -102,7 +102,54 @@ def top_books():
 
             })
         return jsonify(to_return)
+@app.route("/books/author/<author>")
+def get_books_by_author(author):
+    with con:
+        con.row_factory = lite.Row
 
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books WHERE Author=?", [author])
+
+        rows = cur.fetchall()
+        to_return = []
+        for row in rows:
+            to_return.append({
+                "id": row["Id"],
+                "title": row["Title"],
+                "imageSrc": row["ImageSrc"],
+                "author": row["Author"],
+                "genre": row["Genre"],
+                "rating": row["Rating"],
+                "price": row["Price"],
+                "releaseDate": row["ReleaseDate"],
+                "description": row["Description"]
+
+            })
+        return jsonify(to_return)
+@app.route("/books/genre/<genre>")
+def get_books_in_genre(genre):
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books WHERE Genre=?", [genre])
+
+        rows = cur.fetchall()
+        to_return = []
+        for row in rows:
+            to_return.append({
+                "id": row["Id"],
+                "title": row["Title"],
+                "imageSrc": row["ImageSrc"],
+                "author": row["Author"],
+                "genre": row["Genre"],
+                "rating": row["Rating"],
+                "price": row["Price"],
+                "releaseDate": row["ReleaseDate"],
+                "description": row["Description"]
+
+            })
+        return jsonify(to_return)
 @app.route("/books/<book_ID>")
 def get_book(book_ID):
     with con:
@@ -127,21 +174,54 @@ def get_book(book_ID):
         }
         return jsonify(to_return)
 
-@app.route("/profile/<username>")
-def profile(username):
+@app.route("/profile", methods=['POST'])
+def profile():
     with con:
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+
+        addresses = []
+        cards = []
+
         con.row_factory = lite.Row
 
         cur = con.cursor()
+
+        cur.execute("SELECT sp.* FROM ShippingAddresses as sp INNER JOIN Users as u ON u.userid = sp.userid where u.username=?", [username])
+        row = cur.fetchall()
+        for rows in row:
+            addresses.append({
+                "street": rows["Street"],
+                "city": rows["City"],
+                "state": rows["State"],
+                "zip": rows["Zipcode"]
+            })
+
+        cur.execute("SELECT pa.* FROM PaymentInformation as pa INNER JOIN Users as u ON u.userid = pa.userid where u.username=?", [username])
+        row = cur.fetchall()
+        for rows in row:
+            cards.append({
+                "cardNumber": rows["CreditCardNumber"],
+                "cardCompany": rows["CreditCardCompany"],
+                "expirationDate": rows["expirationDate"]
+            })
+
         cur.execute("SELECT * FROM Users WHERE username=?", [username])
         row = cur.fetchone()
-
-        to_return ={
-            "userID": row["UserID"],
-            "firstName": row["FirstName"],
-            "lastName": row["LastName"],
-            "username": row["username"],
-            "email": row["Email"],
-            "homeAddress": row["HomeAddress"]
+        if row:
+            to_return ={
+                "userID": row["UserID"],
+                "firstName": row["FirstName"],
+                "lastName": row["LastName"],
+                "username": row["username"],
+                "email": row["Email"],
+                "homeAddress": row["HomeAddress"],
+                "shippingAddresses": addresses,
+                "creditCards": cards,
+                "status": 200
         }
+
+
+
+
         return jsonify(to_return)
