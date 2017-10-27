@@ -51,7 +51,6 @@ class App extends Component {
   }
 
   handleHeader(e, count){
-    this.forceUpdate();
     this.setState({
       headerCount: count
     })
