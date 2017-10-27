@@ -1,41 +1,35 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
+import './cart.css';
 
 class ShopCart extends Component{
     constructor(props) {
         super(props);
-
-        this.state = {
-          total: 0,
-          items: []
-        };
-
+        this.state={
+            totalPrice:0,
+            items:[],
+            header:0
+        }
         this.countTotal = this.countTotal.bind(this);
-        this.addItem = this.addItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
-
     }
 
-    componentDidMount() {
-        this.token = PubSub.subscribe('cart.added', this.addItem)
-        this.token = PubSub.subscribe('cart.removed', this.removeItem)
-    }
-    componentWillUnmount(){
-        PubSub.unsubscribe(this.token)
-    }
-
-    addItem (e, item) {
-        var items = this.state.items;
-        items.push(item)
-        this.setState({items: items})
-        this.forceUpdate();
-
-        this.countTotal();
+    componentWillMount() {        
+        var cartItems = this.props.location.state.books;
+        var cartTotal = this.props.location.state.cartTotal;
+        var header = this.props.location.state.header;
+        var _this = this;
+        _this.setState({
+            items: cartItems,
+            totalPrice: cartTotal,
+            header: header
+        })
+        console.log(this.props);
     }
 
-    removeItem (e, itemId) {
+    removeItem (itemId) {
+        
         var itemIndexInArray;
-
         this.state.items.some(function(item, index) {
           if(item.id === itemId) {
             itemIndexInArray = index;
@@ -44,22 +38,32 @@ class ShopCart extends Component{
             return false;
           }
         });
-
-        this.state.items.splice(itemIndexInArray, 1);
-        this.forceUpdate();
-
+        //assuming item to be removed is always in array
+        if(this.state.items[itemIndexInArray].quantity > 1){
+            var stateCopy = Object.assign({}, this.state);
+            stateCopy.items[itemIndexInArray].quantity -= 1;
+            this.setState(stateCopy);     
+        }else{
+            this.state.items.splice(itemIndexInArray, 1);
+        }
+        //tell parent about removal
+        console.log(this.state);
+        this.setState({
+            header: this.state.header - 1
+        });
+        PubSub.publish('cart.removed', this.state.header - 1)
         this.countTotal();
+        console.log(this.state);
     }
-
     countTotal() {
         let totalPrice = 0;
-
         this.state.items.forEach(function (item) {
-          totalPrice += +parseFloat(item.price);
+          var indiv_price = item.price*item.quantity;
+          totalPrice += +parseFloat(indiv_price);
         });
-
+    
         this.setState({
-          "total": totalPrice.toFixed(2)
+          totalPrice: totalPrice.toFixed(2)
         });
     }
 
@@ -69,24 +73,24 @@ class ShopCart extends Component{
                 <li key={item.id} style ={{listStyle: 'none'}}>
                     <span> {item.title} </span>
                     <span style = {{float: 'right'}}>${item.price}</span>
+                    <span><button onClick={this.removeItem.bind(this, item.id)}>[{item.quantity}]</button></span>
                 </li>
             )
-        });
-
+        },this);
         var body = (
             <ul>
                 {items}
             </ul>
         );
-
         var empty = <div className="alert alert-info">Cart is empty</div>;
-
         return (
-            <div className="panel panel-default" style = {{position: 'fixed'}}>
-                <div className="panel-body">
-                    <h5>Shopping Cart</h5>
-                    {items.length > 0 ? body : empty}
-                    <div style = {{float: 'right'}}>Total: ${this.state.total} </div>
+            <div className = 'shopping-cart'>
+                <div className="panel panel-default">
+                    <div>Your Cart: </div>
+                    <div className="panel-body">
+                        {items.length > 0 ? body : empty} 
+                        <div>Total: ${this.state.totalPrice} </div>
+                    </div>
                 </div>
             </div>
         );
