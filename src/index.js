@@ -10,7 +10,6 @@ import Home from './Components/home';
 import Profile from './Components/Profile';
 import BookList from'./Components/bookList';
 import Shopcart from './Components/shopcart';
-import Bookpage from './Components/bookpage';
 import BookpageByAuthor from './Components/BooksByAuthor';
 
 ReactDOM.render(<Router history={hashHistory}>
@@ -19,7 +18,7 @@ ReactDOM.render(<Router history={hashHistory}>
                     <Route path="/home" component={Home}/>
                     <Route path="/books" component={BookList}/>
                     <Route path="/books/:id" component={BookDetailed}/>
-                    <Route path="/profile/:username" component={Profile}/>
+                    <Route path="/profile" component={Profile}/>
                     <Route path="/shopcart" component={Shopcart}/>
                     <Route path="/books/author/:author" component={BookpageByAuthor}/>
                   </Route>
