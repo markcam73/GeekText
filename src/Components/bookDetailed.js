@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import API from '../API';
+import PubSub from 'pubsub-js';
 class BookDetailed extends Component {
   constructor(supplied) {
       super(supplied);
       this.state={
         book:{}
       }
+      this.addItemToCart = this.addItemToCart.bind(this);
   }
   componentWillMount(){
     var bookID = this.props.params.id;
@@ -15,6 +17,9 @@ class BookDetailed extends Component {
     API.getRequest('/books/' + bookID).then(function(data){
       _this.setState({book:data});
     })
+  }
+  addItemToCart (event) {
+    PubSub.publish('cart.added', this.state.book);
   }
   render() {
     return (
@@ -36,6 +41,7 @@ class BookDetailed extends Component {
                     value={this.state.book.rating}
                     />
         </div>
+        <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
       </div>
     );
   }
