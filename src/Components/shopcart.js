@@ -27,11 +27,11 @@ class ShopCart extends Component{
         console.log(this.props);
     }
 
-    removeItem (itemId) {
+    removeItem (cartItem) {
         
         var itemIndexInArray;
         this.state.items.some(function(item, index) {
-          if(item.id === itemId) {
+          if(item.id === cartItem.id) {
             itemIndexInArray = index;
             return true;
           }else{
@@ -51,7 +51,12 @@ class ShopCart extends Component{
         this.setState({
             header: this.state.header - 1
         });
-        PubSub.publish('cart.removed', this.state.header - 1)
+        var e = {};
+        e.header = this.state.header - 1;
+        e.price = cartItem.price;
+        console.log(e.price);
+        PubSub.publish('cart.removed', e)
+        PubSub.publish('change.price', e)
         this.countTotal();
         console.log(this.state);
     }
@@ -73,7 +78,7 @@ class ShopCart extends Component{
                 <li key={item.id} style ={{listStyle: 'none'}}>
                     <span> {item.title} </span>
                     <span style = {{float: 'right'}}>${item.price}</span>
-                    <span><button onClick={this.removeItem.bind(this, item.id)}>[{item.quantity}]</button></span>
+                    <span><button onClick={this.removeItem.bind(this, item)}>[{item.quantity}]</button></span>
                 </li>
             )
         },this);
