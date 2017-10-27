@@ -29,7 +29,7 @@ class App extends Component {
         <div className="App-header">
         <button onClick={()=>API.changePath("/home/",{username:this.state.username})}>Home</button>
         <button onClick={()=>API.changePath("/books/",{username:this.state.username})}>Books</button>
-        <button onClick={()=>API.changePath("/profile/" + this.state.username,{username:this.state.username})}>Profile</button>
+        <button onClick={()=>API.changePath("/profile",{username:this.state.username})}>Profile</button>
         </div>
         {this.props.children}
       </div>

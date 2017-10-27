@@ -11,15 +11,22 @@ class Profile extends Component {
     }
   }
   componentWillMount(){
-    var username = this.props.params.username;
-    console.log(username);
-    var _this = this;
-    API.getRequest('/profile/' + username).then(function(data){
-      console.log(data.creditCards);
-      console.log(data.shippingAddresses);
-      _this.setState({user:data});
+    if(window.sessionStorage.token) {
+      var payload = {
+          token: window.sessionStorage.token
+      };
+      var _this = this;
+      API.postRequest(payload, '/profile').then((jsonRes) => {
+            console.log(jsonRes);
+            if (jsonRes.status===200){
+              _this.setState({user:jsonRes})
+            }else{
 
-    })
+            }
+      })
+    }else{
+      API.changePath("/",{})
+    }
   }
   render() {
     return (

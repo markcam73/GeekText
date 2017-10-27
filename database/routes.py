@@ -174,9 +174,12 @@ def get_book(book_ID):
         }
         return jsonify(to_return)
 
-@app.route("/profile/<username>")
-def profile(username):
+@app.route("/profile", methods=['POST'])
+def profile():
     with con:
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+
         addresses = []
         cards = []
 
@@ -205,16 +208,19 @@ def profile(username):
 
         cur.execute("SELECT * FROM Users WHERE username=?", [username])
         row = cur.fetchone()
-        to_return ={
-            "userID": row["UserID"],
-            "firstName": row["FirstName"],
-            "lastName": row["LastName"],
-            "username": row["username"],
-            "email": row["Email"],
-            "homeAddress": row["HomeAddress"],
-            "shippingAddresses": addresses,
-            "creditCards": cards
+        if row:
+            to_return ={
+                "userID": row["UserID"],
+                "firstName": row["FirstName"],
+                "lastName": row["LastName"],
+                "username": row["username"],
+                "email": row["Email"],
+                "homeAddress": row["HomeAddress"],
+                "shippingAddresses": addresses,
+                "creditCards": cards,
+                "status": 200
         }
+
 
 
 
