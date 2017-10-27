@@ -21,10 +21,7 @@ ReactDOM.render(<Router history={hashHistory}>
                     <Route path="/books/:id" component={BookDetailed}/>
                     <Route path="/profile/:username" component={Profile}/>
                     <Route path="/shopcart" component={Shopcart}/>
-                    <Route path="/books" component={Bookpage}/>
                     <Route path="/books/author/:author" component={BookpageByAuthor}/>
-                    <Route path="/books/:id" component={BookDetailed}/>
-                    <Route path="/profile" component={Profile}/>
                   </Route>
                 </Router>, document.getElementById('root'));
 registerServiceWorker();
