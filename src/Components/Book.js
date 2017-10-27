@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import './book.css';
-import PubSub from 'pubsub-js';
 import API from '../API';
 
 class Book extends Component {
-  constructor(props) {
-    super(props);
-
-    this.addItemToCart = this.addItemToCart.bind(this);
-  }
-
-  addItemToCart (event) {
-    PubSub.publish('cart.added', this.props);
-  }
-
   render() {
     return (
       <div style={styles.divStyle}>
@@ -35,7 +24,6 @@ class Book extends Component {
                         />
             </div>
         </div>
-        <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
       </div>
     );
   }
