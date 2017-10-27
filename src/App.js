@@ -116,11 +116,10 @@ class App extends Component {
         <div className="App-header">
         <button onClick={()=>API.changePath("/home/",{username:this.state.username})}>Home</button>
         <button onClick={()=>API.changePath("/books/",{username:this.state.username})}>Books</button>
-        <button onClick={()=>API.changePath("/profile/" + this.state.username,{username:this.state.username})}>Profile</button>
+        <button onClick={()=>API.changePath("/profile",{username:this.state.username})}>Profile</button>
         <button onClick={()=>API.changePath("/shopcart/", {username:this.state.username, books:this.state.items, cartTotal: this.state.cartTotal, header: this.state.headerCount})} style = {{float: 'right', height: '32px'}}> <img src = './cart.png' alt="cart" style = {{width: '40px', height: '25px'}}/>
           {this.state.headerCount > 0 ? content: empty}
         </button>
-        <button onClick={()=>API.changePath("/profile",{username:this.state.username})}>Profile</button>
         </div>
         {this.props.children}
       </div>
