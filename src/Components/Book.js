@@ -8,23 +8,11 @@ class Book extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {added: false};
     this.addItemToCart = this.addItemToCart.bind(this);
   }
 
   addItemToCart (event) {
-    if(!this.state.added) {
-    // add
-      PubSub.publish('cart.added', this.props);
-    }
-    else {
-    // remove
-      PubSub.publish('cart.removed', this.props.id);
-    }
-
-    this.setState({
-      added: !this.state.added
-    });
+    PubSub.publish('cart.added', this.props);
   }
 
   render() {
@@ -47,7 +35,7 @@ class Book extends Component {
                         />
             </div>
         </div>
-        <button className={this.state.added ? 'btn btn-danger' : 'btn btn-primary'} onClick={this.addItemToCart}> {this.state.added ? 'Remove' : 'Add to cart'}</button>
+        <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
       </div>
     );
   }
