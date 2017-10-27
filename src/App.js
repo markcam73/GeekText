@@ -32,12 +32,14 @@ class App extends Component {
     this.handleAdd = this.handleAdd.bind(this);
     this.handleHeader = this.handleHeader.bind(this);
     this.countTotal = this.countTotal.bind(this);
+    this.handleTotal = this.handleTotal.bind(this);
     this.createCartElement = this.createCartElement.bind(this);
   }
   
   componentDidMount(){
     PubSub.subscribe('cart.added', this.handleAdd)
     PubSub.subscribe('cart.removed', this.handleHeader)
+    PubSub.subscribe('change.price',this.handleTotal)
   }
   createCartElement(item){
     var e = {}
@@ -52,7 +54,14 @@ class App extends Component {
 
   handleHeader(e, count){
     this.setState({
-      headerCount: count
+      headerCount: count.header
+    })
+  }
+
+  handleTotal(e, total){
+    var temp = this.state.cartTotal - total.price;
+    this.setState({
+      cartTotal: temp.toFixed(2)
     })
     console.log(this.state);
   }
