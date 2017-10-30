@@ -14,7 +14,7 @@ class ShopCart extends Component{
         this.removeItem = this.removeItem.bind(this);
     }
 
-    componentWillMount() {        
+    componentWillMount() {
         var cartItems = this.props.location.state.books;
         var cartTotal = this.props.location.state.cartTotal;
         var header = this.props.location.state.header;
@@ -28,7 +28,7 @@ class ShopCart extends Component{
     }
 
     removeItem (cartItem) {
-        
+
         var itemIndexInArray;
         this.state.items.some(function(item, index) {
           if(item.id === cartItem.id) {
@@ -42,7 +42,7 @@ class ShopCart extends Component{
         if(this.state.items[itemIndexInArray].quantity > 1){
             var stateCopy = Object.assign({}, this.state);
             stateCopy.items[itemIndexInArray].quantity -= 1;
-            this.setState(stateCopy);     
+            this.setState(stateCopy);
         }else{
             this.state.items.splice(itemIndexInArray, 1);
         }
@@ -66,7 +66,7 @@ class ShopCart extends Component{
           var indiv_price = item.price*item.quantity;
           totalPrice += +parseFloat(indiv_price);
         });
-    
+
         this.setState({
           totalPrice: totalPrice.toFixed(2)
         });
@@ -93,7 +93,7 @@ class ShopCart extends Component{
                 <div className="panel panel-default">
                     <div>Your Cart: </div>
                     <div className="panel-body">
-                        {items.length > 0 ? body : empty} 
+                        {items.length > 0 ? body : empty}
                         <div>Total: ${this.state.totalPrice} </div>
                     </div>
                 </div>

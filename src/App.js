@@ -35,7 +35,7 @@ class App extends Component {
     this.handleTotal = this.handleTotal.bind(this);
     this.createCartElement = this.createCartElement.bind(this);
   }
-  
+
   componentDidMount(){
     PubSub.subscribe('cart.added', this.handleAdd)
     PubSub.subscribe('cart.removed', this.handleHeader)
@@ -48,8 +48,8 @@ class App extends Component {
     e.id = item.id;
     e.price = item.price;
     e.imageSrc = item.imageSrc;
-    e.quantity = quantity; 
-    return e; 
+    e.quantity = quantity;
+    return e;
   }
 
   handleHeader(e, count){
@@ -65,11 +65,11 @@ class App extends Component {
     })
     console.log(this.state);
   }
-  
+
   handleAdd (e, item) {
     var items = this.state.items;
     var cartItem = this.createCartElement(item);
-    
+
     var itemIndexInArray = -1;
     this.state.items.some(function(item, index) {
       if(item.id === cartItem.id) {
@@ -92,7 +92,7 @@ class App extends Component {
       var stateCopy = Object.assign({}, this.state);
       stateCopy.items[itemIndexInArray].quantity += 1;
       stateCopy.headerCount += 1;
-      this.setState(stateCopy); 
+      this.setState(stateCopy);
     }
     this.countTotal();
     console.log(this.state);
@@ -111,25 +111,27 @@ class App extends Component {
   }
 
   render() {
-    var content = (  
+    var content = (
       <p className ='badge badge-warning' style = {{backgroundColor: 'red', color: 'white', fontSize: '10px'}}>
         {this.state.headerCount}
       </p>
     );
 
     var empty = null;
-    
+
     return (
       <div className="App">
         <div className="App-header">
-        <button onClick={()=>API.changePath("/home/",{username:this.state.username})}>Home</button>
-        <button onClick={()=>API.changePath("/books/",{username:this.state.username})}>Books</button>
-        <button onClick={()=>API.changePath("/profile",{username:this.state.username})}>Profile</button>
-        <button onClick={()=>API.changePath("/shopcart/", {username:this.state.username, books:this.state.items, cartTotal: this.state.cartTotal, header: this.state.headerCount})} style = {{float: 'right', height: '32px'}}> <img src = './cart.png' alt="cart" style = {{width: '40px', height: '25px'}}/>
-          {this.state.headerCount > 0 ? content: empty}
-        </button>
+          <button onClick={()=>API.changePath("/home/",{username:this.state.username})}>Home</button>
+          <button onClick={()=>API.changePath("/books/",{username:this.state.username})}>Books</button>
+          <button onClick={()=>API.changePath("/profile",{username:this.state.username})}>Profile</button>
+          <button onClick={()=>API.changePath("/shopcart/", {username:this.state.username, books:this.state.items, cartTotal: this.state.cartTotal, header: this.state.headerCount})} style = {{float: 'right', height: '32px'}}> <img src = './cart.png' alt="cart" style = {{width: '40px', height: '25px'}}/>
+            {this.state.headerCount > 0 ? content: empty}
+          </button>
         </div>
-        {this.props.children}
+        <div className="App-body">
+            {this.props.children}
+        </div>
       </div>
     );
   }
