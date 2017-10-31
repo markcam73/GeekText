@@ -50,7 +50,7 @@ var styles ={
       height:"19px"
   },
   headerStyle: {
-    fontSize:"8vmin"
+    fontSize:"4vmin"
   }
 }
 export default Book;
