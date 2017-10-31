@@ -8,26 +8,75 @@ const pageSize=9;
 class BookList extends Component {
   constructor(props) {
     super(props);
-    this.state={books: [],filteredBooks:[],sort:"title",order:1,currentPage:1}
+    this.state={books: [],filteredBooks:[],sort:"title",order:1,currentPage:1,pageSize:9}
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handleGenreChange = this.handleGenreChange.bind(this);
     this.handleOrderChange = this.handleOrderChange.bind(this);
   }
 
   componentDidMount(){
+    if(this.props.pageSize){
+      this.setState({pageSize:this.props.pageSize});
+    }
     var _this = this
     if(this.props.author){
       API.getRequest('/books/author/' + this.props.author).then(function(data){
+        if(_this.props.skipID!==null){
+          data = _this.skipID(data, _this.props.skipID);
+        }
+        _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
+      })
+    }else if(this.props.genre){
+      API.getRequest('/books/genre/' + this.props.genre).then(function(data){
+        if(_this.props.skipID !==null){
+          data = _this.skipID(data, _this.props.skipID);
+        }
         _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
       })
     }else{
       API.getRequest('/books').then(function(data){
+        if(_this.props.skipID!==null){
+          data = _this.skipID(data, _this.props.skipID);
+        }
         _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
       })
     }
 
   }
+  componentWillReceiveProps(newProps){
+    if(newProps.pageSize){
+      this.setState({pageSize:newProps.pageSize});
+    }
+    console.log(newProps);
+    var _this = this
+    if(newProps.author){
+      API.getRequest('/books/author/' + newProps.author).then(function(data){
+        if(newProps.skipID!==null){
+          data = _this.skipID(data, newProps.skipID);
+        }
+        _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
+      })
+    }else if(newProps.genre){
+      API.getRequest('/books/genre/' + newProps.genre).then(function(data){
+        if(newProps.skipID !==null){
+          data = _this.skipID(data, newProps.skipID);
+        }
+        _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
+      })
+    }else{
+      API.getRequest('/books').then(function(data){
+        if(newProps.skipID!==null){
+          data = _this.skipID(data, newProps.skipID);
+        }
+        _this.setState({books:data,filteredBooks:sortByKey(data,"title",1)});
+      })
+    }
+  }
 
+  skipID(arr, id){
+      //It will warn to change this to !== DONT CHANGE
+      return arr.filter((e)=>e.id != id);
+  }
   handleSortChange(event) {
     this.setState({sort: event.target.value,filteredBooks: sortByKey(this.state.filteredBooks,event.target.value, this.state.order)});
   }
@@ -46,6 +95,7 @@ class BookList extends Component {
   render() {
     return (
       <div>
+        {this.props.hideSort !== true?
         <div style={styles.sortDivStyle}>
           <p style={styles.selectLabelStyle}> Browse By genre:</p>
           <select style={styles.selectStyle} defaultValue={this.state.genre} onChange={this.handleGenreChange}>
@@ -69,10 +119,10 @@ class BookList extends Component {
             <option value={1}>Ascending</option>
             <option value={-1}>Descending</option>
           </select>
-        </div>
+        </div> : null}
         <div style={styles.booksStyle}>
           {this.state.filteredBooks.map((book,i)=>
-            (i<this.state.currentPage*pageSize && i>=(this.state.currentPage-1)*pageSize?
+            (i<this.state.currentPage*this.state.pageSize && i>=(this.state.currentPage-1)*this.state.pageSize?
             <Book key ={i}
                   id={book.id}
                   title={book.title}
@@ -83,15 +133,17 @@ class BookList extends Component {
                   price={book.price}
                   releaseDate={book.releaseDate}
                   description={book.description}
+                  minimal ={this.props.minimal}
                   /> : null)
           )}
 
         </div>
+        {this.props.hidePage !==true?
         <Pagination onChange={this.onChangePage}
                     current={this.state.currentPage}
                     total={this.state.filteredBooks.length}
-                    pageSize={pageSize}
-                    showTitle={false}/>
+                    pageSize={this.state.pageSize}
+                    showTitle={false}/> :null}
       </div>
     );
   }

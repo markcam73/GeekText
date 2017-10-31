@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import API from '../API';
 import PubSub from 'pubsub-js';
+import BookList from './bookList';
+
 class BookDetailed extends Component {
   constructor(supplied) {
       super(supplied);
@@ -18,40 +20,75 @@ class BookDetailed extends Component {
       _this.setState({book:data});
     })
   }
+  componentWillReceiveProps(newProps){
+    var bookID = newProps.params.id;
+    console.log(bookID);
+    var _this = this;
+    API.getRequest('/books/' + bookID).then(function(data){
+      console.log(data);
+      _this.setState({book:data});
+    })
+  }
   addItemToCart (event) {
     PubSub.publish('cart.added', this.state.book);
   }
   render() {
     return (
-      <div style={styles.divStyle}>
-        <h1>{this.state.book.title}</h1>
-        <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
-        <p>Author: <a href={"/#/books/author/" + encodeURIComponent(this.state.book.author)}>{this.state.book.author}</a></p>
-        <p>Genre: {this.state.book.genre}</p>
-        <p>Price: {this.state.book.price}</p>
-        <p>Release date: {this.state.book.releaseDate}</p>
-        <p>Description: {this.state.book.description}</p>
-        <div style={styles.ratingDiv}>
-          <p>Rating: </p>
-          <StarRatingComponent
-                    name="rate1"
-                    editing={true}
-                    onStarClick={(newRating,oldRating,name)=>console.log(newRating)}
-                    starCount={5}
-                    value={this.state.book.rating}
-                    />
+      <div style={styles.containerDiv}>
+        <div style={styles.leftDiv}>
+          <div style={styles.leftInnerDiv}>
+            <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
+            <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
+          </div>
+          <div style={styles.bookInfo}>
+            <h1>{this.state.book.title}</h1>
+            <p>Author: <a href={"/#/books/author/" + encodeURIComponent(this.state.book.author)}>{this.state.book.author}</a></p>
+            <p>Genre: {this.state.book.genre}</p>
+            <p>Price: {this.state.book.price}</p>
+            <p>Release date: {this.state.book.releaseDate}</p>
+            <p>Description: {this.state.book.description}</p>
+            <div style={styles.ratingDiv}>
+              <p>Rating: </p>
+              <StarRatingComponent
+                        name="rate1"
+                        editing={true}
+                        onStarClick={(newRating,oldRating,name)=>console.log(newRating)}
+                        starCount={5}
+                        value={this.state.book.rating}
+                        />
+            </div>
+          </div>
         </div>
-        <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
+        <div style={styles.rightDiv}>
+            <h1>View similar titles</h1>
+            <BookList hideSort={true}
+                      genre={this.state.book.genre}
+                      minimal={true}
+                      hidePage={true}
+                      pageSize={3}
+                      skipID={this.props.params.id}/>
+
+        </div>
       </div>
     );
   }
 }
 var styles ={
-  divStyle:{
-    display: "inline-block",
-    marginBottom: "8px",
-    width: "calc(25% - 4px)",
-    marginRight: "8px",
+  containerDiv:{
+    display: "flex"
+  },
+  leftDiv:{
+    display: "flex",
+    width:"50%",
+    marginRight:"auto"
+  },
+  leftInnerDiv:{
+    display: "block",
+    width:"50%",
+    marginRight:"auto"
+  },
+  rightDiv:{
+    width:"40%"
   },
   imgStyle:{
     width:"100%"

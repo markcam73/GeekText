@@ -5,7 +5,8 @@ class BookpageByAuthor extends Component{
     render(){
         return(
             <div>
-                <BookList author={this.props.params.author}/>
+                <BookList author={this.props.params.author}
+                          pageSize={9}/>
             </div>
         );
     }
