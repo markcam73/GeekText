@@ -81,7 +81,7 @@ class BookList extends Component {
     this.setState({sort: event.target.value,filteredBooks: sortByKey(this.state.filteredBooks,event.target.value, this.state.order)});
   }
   handleGenreChange(event) {
-    this.setState({genre: event.target.value,filteredBooks: sortByKey(filterByGenre(this.state.books,event.target.value),this.state.sort,this.state.order)});
+    this.setState({currentPage: 1, genre: event.target.value,filteredBooks: sortByKey(filterByGenre(this.state.books,event.target.value),this.state.sort,this.state.order)});
   }
   handleOrderChange(event) {
     this.setState({order: event.target.value,filteredBooks: sortByKey(this.state.filteredBooks,this.state.sort, event.target.value)});
