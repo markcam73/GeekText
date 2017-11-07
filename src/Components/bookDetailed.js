@@ -8,7 +8,8 @@ class BookDetailed extends Component {
   constructor(supplied) {
       super(supplied);
       this.state={
-        book:{}
+        book:{},
+        myRating:0
       }
       this.addItemToCart = this.addItemToCart.bind(this);
   }
@@ -32,6 +33,22 @@ class BookDetailed extends Component {
   addItemToCart (event) {
     PubSub.publish('cart.added', this.state.book);
   }
+  rate(rating){
+    this.setState({myRating:rating})
+    var payload ={
+      "rating": rating,
+      "book_id": this.state.book.id,
+      "token": window.sessionStorage.token
+    };
+    var _this = this;
+    API.postRequest(payload,"/books/rate").then((jsonRes)=>{
+        if(jsonRes.status===200){
+          var book = this.state.book;
+          book["rating"] = jsonRes.newRating;
+          _this.setState({"book":book})
+        }
+    })
+  }
   render() {
     return (
       <div style={styles.containerDiv}>
@@ -51,10 +68,19 @@ class BookDetailed extends Component {
               <p>Rating: </p>
               <StarRatingComponent
                         name="rate1"
-                        editing={true}
-                        onStarClick={(newRating,oldRating,name)=>console.log(newRating)}
+                        editing={false}
                         starCount={5}
                         value={this.state.book.rating}
+                        />
+            </div>
+            <div style={styles.ratingDiv}>
+              <p>Your Rating: </p>
+              <StarRatingComponent
+                        name="rate2"
+                        editing={true}
+                        onStarClick={(newRating,oldRating,name)=>this.rate(newRating)}
+                        starCount={5}
+                        value={this.state.myRating}
                         />
             </div>
           </div>
