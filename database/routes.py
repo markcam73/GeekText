@@ -150,6 +150,34 @@ def get_books_in_genre(genre):
 
             })
         return jsonify(to_return)
+
+@app.route("/books/rate", methods=['POST'])
+def rate_book():
+    user_token = request.json["token"]
+    username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+    book_id = request.json["book_id"]
+    rating = request.json["rating"]
+
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?", [username])
+        row = cur.fetchone()
+        user_id=row["UserID"]
+        cur.execute("INSERT OR REPLACE INTO Ratings VALUES (?,?,?)", [book_id, user_id,rating])
+        cur.execute("SELECT * FROM Ratings WHERE BookId=?", [book_id])
+        rows=cur.fetchall()
+        total=0
+        count = 0
+        for row in rows:
+            count+=1
+            total+=row["rating"]
+        avg_rating=total/count
+        sql =  "UPDATE Books SET Rating=? WHERE Id = ?"
+        cur.execute(sql,(avg_rating,book_id))
+        return jsonify({"status":200,"newRating":avg_rating})
+
 @app.route("/books/<book_ID>")
 def get_book(book_ID):
     with con:

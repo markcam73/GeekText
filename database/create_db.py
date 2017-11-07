@@ -60,4 +60,4 @@ with con:
     cur.execute("DROP TABLE IF EXISTS Comments")
     cur.execute("CREATE TABLE Comments(CommentID INT, BookId INT, UserID INT, Comment TEXT)")
     cur.execute("DROP TABLE IF EXISTS Ratings")
-    cur.execute("CREATE TABLE Ratings(BookId INT, UserID INT, Rating INT)")
+    cur.execute("CREATE TABLE Ratings(BookId INT, UserID INT, Rating INT, PRIMARY KEY(BookId,UserID))")
