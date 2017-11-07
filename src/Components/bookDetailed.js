@@ -20,6 +20,13 @@ class BookDetailed extends Component {
     API.getRequest('/books/' + bookID).then(function(data){
       _this.setState({book:data});
     })
+    var payload ={
+      "token": window.sessionStorage.token,
+      "book_id": bookID
+    };
+    API.postRequest(payload, "/books/rate/mine").then((jsonRes)=>{
+      _this.setState({myRating:jsonRes.rating})
+    })
   }
   componentWillReceiveProps(newProps){
     var bookID = newProps.params.id;
@@ -28,6 +35,13 @@ class BookDetailed extends Component {
     API.getRequest('/books/' + bookID).then(function(data){
       console.log(data);
       _this.setState({book:data});
+    })
+    var payload ={
+      "token": window.sessionStorage.token,
+      "book_id": bookID
+    };
+    API.postRequest(payload, "/books/rate/mine").then((jsonRes)=>{
+      _this.setState({myRating:jsonRes.rating})
     })
   }
   addItemToCart (event) {

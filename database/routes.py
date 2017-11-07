@@ -178,6 +178,23 @@ def rate_book():
         cur.execute(sql,(avg_rating,book_id))
         return jsonify({"status":200,"newRating":avg_rating})
 
+@app.route("/books/rate/mine", methods=['POST'])
+def get_rating():
+    user_token = request.json["token"]
+    username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+    book_id = request.json["book_id"]
+
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?", [username])
+        row = cur.fetchone()
+        user_id=row["UserID"]
+        cur.execute("SELECT * FROM Ratings WHERE BookId=? AND UserID=?", [book_id,user_id])
+        row=cur.fetchone()
+        return jsonify({"status":200,"rating":row["rating"]})
+
 @app.route("/books/<book_ID>")
 def get_book(book_ID):
     with con:
