@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Router, Route, hashHistory} from 'react-router';
 import BookDetailed from './Components/bookDetailed';
 import Login from './Components/login';
+import SignUp from './Components/signup';
 import Home from './Components/home';
 import Profile from './Components/Profile';
 import BookList from'./Components/bookList';
@@ -14,6 +15,7 @@ import BookpageByAuthor from './Components/BooksByAuthor';
 
 ReactDOM.render(<Router history={hashHistory}>
                   <Route path="/" component={Login}/>
+                  <Route path="/signup" component={SignUp}/>
                   <Route component={App}>
                     <Route path="/home" component={Home}/>
                     <Route path="/books" component={BookList}/>

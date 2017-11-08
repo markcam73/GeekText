@@ -55,6 +55,7 @@ class Login extends Component {
           <input type="submit" value="Submit" />
           {this.state.incorrect ? <p>Incorrect username or password</p> : null}
         </form>
+        <a href="#/signup" onClick={()=>API.changePath("/signup")}>Sign up</a>
       </div>
     );
   }

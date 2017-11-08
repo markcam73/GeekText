@@ -34,6 +34,8 @@ def login():
 @app.route('/signup', methods=['POST'])
 def signup():
     #Users FirstName TEXT, LastName TEXT, HomeAddress TEXT, Email TEXT, username TEXT, password TEXT)")
+    if not request.json["password"]:
+        return jsonify({"status": 400, "error": "invalid password"})
     pass_hash = bcrypt.generate_password_hash(request.json["password"])
     with con:
         con.row_factory = lite.Row
@@ -43,6 +45,12 @@ def signup():
         row = cur.fetchone()
         if row:
             return jsonify({"status": 400, "error": "username exists"})
+        if not request.json["firstName"]:
+            return jsonify({"status": 400, "error": "invalid first name"})
+        if not request.json["lastName"]:
+            return jsonify({"status": 400, "error": "invalid last name"})
+        if not request.json["username"]:
+            return jsonify({"status": 400, "error": "invalid username"})
         email = request.json["email"]
         if not validate_email(email):
             return jsonify({"status": 400, "error": "invalid email"})
@@ -51,7 +59,7 @@ def signup():
             return jsonify({"status": 400, "error": "invalid address"})
 
         cur.execute("INSERT INTO Users(FirstName,LastName,HomeAddress,Email,username,password) VALUES(?, ?,?,?,?,?)", [request.json["firstName"],request.json["lastName"],request.json["homeAddress"],request.json["email"],request.json["username"],pass_hash])
-    return jsonify({"status":200})
+    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
 
 @app.route('/profile/mine', methods=['POST'])
 def my_info():
