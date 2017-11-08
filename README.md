@@ -17,6 +17,7 @@ pip install flask
 pip install flask_cors
 pip install PyJWT
 pip install flask-bcrypt
+pip install pyDNS
 ```
 First run the backend server (Unix/Linux/Mac):
 ```

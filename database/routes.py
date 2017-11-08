@@ -9,6 +9,8 @@ CORS(app)
 import sqlite3 as lite
 import os
 import jwt
+from validate_email import validate_email
+import re
 
 con = lite.connect(os.path.realpath(__file__)[0:os.path.realpath(__file__).find('routes.py')] + 'geektext.db')
 
@@ -37,6 +39,17 @@ def signup():
         con.row_factory = lite.Row
 
         cur = con.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?", [request.json["username"]])
+        row = cur.fetchone()
+        if row:
+            return jsonify({"status": 400, "error": "username exists"})
+        email = request.json["email"]
+        if not validate_email(email):
+            return jsonify({"status": 400, "error": "invalid email"})
+        address = request.json["homeAddress"]
+        if not re.search(r"\d{1,5}\s\w.?\s(\b\w*\b\s){1,2}\w*\.?",address):
+            return jsonify({"status": 400, "error": "invalid address"})
+
         cur.execute("INSERT INTO Users(FirstName,LastName,HomeAddress,Email,username,password) VALUES(?, ?,?,?,?,?)", [request.json["firstName"],request.json["lastName"],request.json["homeAddress"],request.json["email"],request.json["username"],pass_hash])
     return jsonify({"status":200})
 
