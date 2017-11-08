@@ -29,6 +29,16 @@ def login():
             return jsonify({"status": 200, "token": jwt.encode({'username': user_info["username"]}, 'secret', algorithm='HS256')})
         else:
             return jsonify({"status": 401})
+@app.route('/signup', methods=['POST'])
+def signup():
+    #Users FirstName TEXT, LastName TEXT, HomeAddress TEXT, Email TEXT, username TEXT, password TEXT)")
+    pass_hash = bcrypt.generate_password_hash(request.json["password"])
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("INSERT INTO Users(FirstName,LastName,HomeAddress,Email,username,password) VALUES(?, ?,?,?,?,?)", [request.json["firstName"],request.json["lastName"],request.json["homeAddress"],request.json["email"],request.json["username"],pass_hash])
+    return jsonify({"status":200})
 
 @app.route('/profile/mine', methods=['POST'])
 def my_info():
