@@ -209,6 +209,41 @@ def rate_book():
         cur.execute(sql,(avg_rating,book_id))
         return jsonify({"status":200,"newRating":avg_rating})
 
+@app.route("/books/comment", methods=['POST'])
+def comment_book():
+    user_token = request.json["token"]
+    username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+    book_id = request.json["book_id"]
+    comment = request.json["comment"]
+
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?", [username])
+        row = cur.fetchone()
+        user_id=row["UserID"]
+        cur.execute("INSERT INTO Comments(BookId, UserID, Comment) VALUES (?,?,?)", [book_id, user_id,comment])
+
+        return jsonify({"status":200})
+@app.route("/books/<book_id>/comments")
+def get_comments(book_id):
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Comments WHERE BookId=?", [book_id])
+        rows = cur.fetchall()
+        to_return = []
+        for row in rows:
+            to_return.append({
+                "userID": row["UserID"],
+                "bookID": row["BookId"],
+                "comment": row["Comment"]
+            })
+        return jsonify({"status":200,"comments": to_return})
+
+
 @app.route("/books/rate/mine", methods=['POST'])
 def get_rating():
     user_token = request.json["token"]

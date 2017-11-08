@@ -58,6 +58,6 @@ with con:
     cur.execute("INSERT INTO ShippingAddresses VALUES(1,1,'111 W 1st Ave','Miami','Florida',33333)")
     cur.execute("INSERT INTO ShippingAddresses VALUES(2,1,'123 S 12st Ave','Miami','Florida',33133)")
     cur.execute("DROP TABLE IF EXISTS Comments")
-    cur.execute("CREATE TABLE Comments(CommentID INT, BookId INT, UserID INT, Comment TEXT)")
+    cur.execute("CREATE TABLE Comments(CommentID INT PRIMARY KEY AUTOINCREMENT, BookId INT, UserID INT, Comment TEXT)")
     cur.execute("DROP TABLE IF EXISTS Ratings")
     cur.execute("CREATE TABLE Ratings(BookId INT, UserID INT, Rating INT, PRIMARY KEY(BookId,UserID))")
