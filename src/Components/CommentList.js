@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Comment from './comment';
 
 class CommentList extends Component {
   render() {
-    var commentNodes = this.props.data.map(function(comment) {
+    var commentNodes = this.props.comments.map(function(comment,i) {
       return (
-        <Comment author={comment.author} key={comment.id}>
-          {comment.text}
+        <Comment author={comment.userID} key={i}>
+          {comment.comment}
         </Comment>
       );
     });
@@ -16,3 +17,4 @@ class CommentList extends Component {
     );
   }
 };
+export default CommentList;

@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
+import CommentList from './CommentList';
+import CommentForm from './CommentForm';
+import API from '../API';
 
 class CommentBox extends Component {
-  loadCommentsFromServer() {
-	  //old ajax 
-	  
+
+  constructor(props) {
+    super(props)
+    this.state= {comments: []};
+    this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
+  }
+  loadCommentsFromServer(bookID) {
+	  //old ajax
+
 	  var _this = this;
-	  API.getRequest('/books'/ + this.state.book.id + '/comments').then((jsonRes)=>{
+	  API.getRequest('/books/' + bookID + '/comments').then((jsonRes)=>{
 		  //jsonRes.status will contain a success 200
 		  //jsonRes.comments will be an array of comment objects
 		  _this.setState({comments: jsonRes.comments});//
 		  })
 
-  
+
   }
   handleCommentSubmit(comment) {
     var comments = this.state.comments;
@@ -20,16 +29,13 @@ class CommentBox extends Component {
     var newComments = comments.concat([comment]);
     this.setState({comments: newComments});
 	//old ajax
-	
 
-	
-  }
-  getInitialState() {
-    return {comments: []};
+
+
   }
   componentDidMount() {
-    this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    this.loadCommentsFromServer(this.props.bookID);
+    setInterval(()=>this.loadCommentsFromServer(this.props.bookID), this.props.pollInterval);
   }
   render() {
     return (
@@ -40,5 +46,5 @@ class CommentBox extends Component {
       </div>
     );
   }
-};
-export default CommentBox
+}
+export default CommentBox;

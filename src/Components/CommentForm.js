@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 class CommentForm extends Component {
-  getInitialState() {
-    return {author: '', text: ''};
+  constructor(props) {
+    super(props)
+    this.state = {author: '', text: ''};
   }
   handleAuthorChange(e) {
     this.setState({author: e.target.value});
@@ -40,3 +41,4 @@ class CommentForm extends Component {
     );
   }
 };
+export default CommentForm

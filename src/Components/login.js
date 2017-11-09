@@ -65,7 +65,8 @@ var styles={
     display: "flex",
     flexDirection: "column",
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
+    textAlign: "center"
   }
 }
 export default Login;
