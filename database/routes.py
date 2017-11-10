@@ -223,6 +223,8 @@ def comment_book():
         cur.execute("SELECT * FROM Users WHERE username=?", [username])
         row = cur.fetchone()
         user_id=row["UserID"]
+        first_name=row["FirstName"]
+        last_name=row["LastName"]
         cur.execute("INSERT INTO Comments(BookId, UserID, Comment) VALUES (?,?,?)", [book_id, user_id,comment])
 
         return jsonify({"status":200})
@@ -241,6 +243,13 @@ def get_comments(book_id):
                 "bookID": row["BookId"],
                 "comment": row["Comment"]
             })
+        for comment in to_return:
+            cur.execute("SELECT * FROM Users WHERE UserID=?", [comment["userID"]])
+            row = cur.fetchone()
+            first_name=row["FirstName"]
+            last_name=row["LastName"]
+            comment["firstName"] = first_name
+            comment["lastName"] = last_name
         return jsonify({"status":200,"comments": to_return})
 
 

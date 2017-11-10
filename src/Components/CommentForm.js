@@ -12,7 +12,7 @@ class CommentForm extends Component {
     var _this = this;
     API.postRequest(payload, '/profile/mine').then((jsonRes) => {
           if (jsonRes.status===200){
-            _this.setState({userID: jsonRes.userID})
+            _this.setState({userID: jsonRes.userID, firstName:jsonRes.firstName, lastName:jsonRes.lastName})
           }
     })
   }
@@ -28,7 +28,7 @@ class CommentForm extends Component {
     if (!text) {
       return;
     }
-    this.props.onCommentSubmit({userID: this.state.userID, comment: text});
+    this.props.onCommentSubmit({userID: this.state.userID, comment: text, firstName:this.state.firstName, lastName: this.state.lastName});
     this.setState({author: '', text: ''});
   }
   render() {

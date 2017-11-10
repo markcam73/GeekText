@@ -5,7 +5,7 @@ class CommentList extends Component {
   render() {
     var commentNodes = this.props.comments.map(function(comment,i) {
       return (
-        <Comment author={comment.userID} key={i}>
+        <Comment author={comment.firstName + " " + comment.lastName} key={i}>
           {comment.comment}
         </Comment>
       );
