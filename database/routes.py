@@ -268,7 +268,11 @@ def get_rating():
         user_id=row["UserID"]
         cur.execute("SELECT * FROM Ratings WHERE BookId=? AND UserID=?", [book_id,user_id])
         row=cur.fetchone()
-        return jsonify({"status":200,"rating":row["rating"]})
+        if row:
+            return jsonify({"status":200,"rating":row["rating"]})
+        else:
+            return jsonify({"status":200,"rating":0})
+
 
 @app.route("/books/<book_ID>")
 def get_book(book_ID):
