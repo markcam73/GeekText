@@ -29,7 +29,14 @@ class CommentBox extends Component {
     var newComments = comments.concat([comment]);
     this.setState({comments: newComments});
 	//old ajax
-
+    var payload={
+      token: window.sessionStorage.token,
+      book_id: this.props.bookID,
+      comment: comment.comment
+    }
+    API.postRequest(payload, '/books/comment').then((jsonRes)=>{
+      console.log(jsonRes.status);
+    })
 
 
   }
@@ -42,7 +49,7 @@ class CommentBox extends Component {
       <div className="commentBox">
         <h1>Comments</h1>
         <CommentList comments={this.state.comments} />
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+        <CommentForm onCommentSubmit={(comment)=>this.handleCommentSubmit(comment)} />
       </div>
     );
   }

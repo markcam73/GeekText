@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-
+import API from '../API';
 class CommentForm extends Component {
   constructor(props) {
     super(props)
     this.state = {author: '', text: ''};
+  }
+  componentDidMount(){
+    var payload = {
+        token: window.sessionStorage.token
+    };
+    var _this = this;
+    API.postRequest(payload, '/profile/mine').then((jsonRes) => {
+          if (jsonRes.status===200){
+            _this.setState({userID: jsonRes.userID})
+          }
+    })
   }
   handleAuthorChange(e) {
     this.setState({author: e.target.value});
@@ -13,28 +24,21 @@ class CommentForm extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    var author = this.state.author.trim();
     var text = this.state.text.trim();
-    if (!text || !author) {
+    if (!text) {
       return;
     }
-    this.props.onCommentSubmit({author: author, text: text});
+    this.props.onCommentSubmit({userID: this.state.userID, comment: text});
     this.setState({author: '', text: ''});
   }
   render() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}
-        />
+      <form className="commentForm" onSubmit={(e)=>this.handleSubmit(e)}>
         <input
           type="text"
           placeholder="Say something..."
           value={this.state.text}
-          onChange={this.handleTextChange}
+          onChange={(e)=>this.handleTextChange(e)}
         />
         <input type="submit" value="Post" />
       </form>
