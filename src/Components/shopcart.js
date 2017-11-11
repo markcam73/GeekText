@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import './cart.css';
+import API from '../API';
+
 
 class ShopCart extends Component{
     constructor(props) {
@@ -12,9 +14,10 @@ class ShopCart extends Component{
         }
         this.countTotal = this.countTotal.bind(this);
         this.removeItem = this.removeItem.bind(this);
+        this.saveItems = this.saveItems.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         var cartItems = this.props.location.state.books;
         var cartTotal = this.props.location.state.cartTotal;
         var header = this.props.location.state.header;
@@ -55,10 +58,20 @@ class ShopCart extends Component{
         e.header = this.state.header - 1;
         e.price = cartItem.price;
         console.log(e.price);
-        PubSub.publish('cart.removed', e)
+        PubSub.publish('cart.edited', e)
         PubSub.publish('change.price', e)
         this.countTotal();
         console.log(this.state);
+    }
+    addQuantity(cartItem){
+        this.setState({
+            header: this.state.header+1
+        })
+        var e = {};
+        e.header = this.state.header;
+        PubSub.publish('cart.edited', e)
+        PubSub.publish('cart.added', cartItem)
+        this.countTotal();
     }
     countTotal() {
         let totalPrice = 0;
@@ -72,20 +85,43 @@ class ShopCart extends Component{
         });
     }
 
+    saveItems(e){
+        var i = 0;
+        var _this = this;
+        for(; i < this.state.items.length; i++){
+            var payload = {
+                "bookID" : _this.state.items[i].id,
+                "quantity": _this.state.items[i].quantity
+            }
+            API.postRequest(payload, "/shopcart/savecart").then((jsonRes)=>{
+            if(jsonRes.status==200){
+                alert("items added successfully!");
+            }
+          })
+        }
+    }
+
     render(){
         var items = this.state.items.map(function(item) {
             return (
                 <li key={item.id} style ={{listStyle: 'none'}}>
+                    <span onClick={()=>API.changePath("/books/" + item.id,{})}><img style= {{width:'60px', height: "100px", marginBottom:'60px'}} src={item.imageSrc} alt="cover"/></span>
                     <span> {item.title} </span>
-                    <span style = {{float: 'right'}}>${item.price}</span>
-                    <span><button onClick={this.removeItem.bind(this, item)}>[{item.quantity}]</button></span>
+                    <span style = {{float: 'right',marginRight: '100px'}}>${item.price}</span>
+                    <span><button onClick={this.removeItem.bind(this, item)}>[-]</button></span>
+                    <span style={{marginRight: '10px', marginLeft:'10px'}}>{item.quantity}</span>
+                    <span><button onClick = {this.addQuantity.bind(this, item)}>[+]</button></span>
                 </li>
             )
         },this);
         var body = (
-            <ul>
-                {items}
-            </ul>
+            <div>
+                <ul>
+                    {items}
+                </ul>
+                <div>Total: ${this.state.totalPrice} </div>
+                <button onClick = {this.saveItems}> Save Items For Later </button>
+            </div>
         );
         var empty = <div className="alert alert-info">Cart is empty</div>;
         return (
@@ -94,7 +130,7 @@ class ShopCart extends Component{
                     <div>Your Cart: </div>
                     <div className="panel-body">
                         {items.length > 0 ? body : empty}
-                        <div>Total: ${this.state.totalPrice} </div>
+                        
                     </div>
                 </div>
             </div>
