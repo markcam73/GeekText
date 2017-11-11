@@ -28,6 +28,37 @@ class Profile extends Component {
       API.changePath("/",{})
     }
   }
+  delete_address(street, city, state, zip){
+    var payload = {
+      "username": this.state.user.username,
+      "street": street,
+      "city": city,
+      "state": state,
+      "zipcode": zip
+    };
+    var _this = this;
+    API.postRequest(payload, "/profile/delete/shippingaddress").then((jsonRes)=>{
+      if(jsonRes.status==200){
+        API.changePath("/profile", window.sessionStorage.token)
+      }
+    window.location.reload()
+    })
+  }
+  delete_card(cardNumber,cardCompany,expirationDate){
+    var payload = {
+      "username": this.state.user.username,
+      "cardNumber": cardNumber,
+      "cardCompany": cardCompany,
+      "expirationDate": expirationDate
+    };
+    API.postRequest(payload, "/profile/delete/card").then((jsonRes)=>{
+      if(jsonRes.status==200){
+        API.changePath("/profile", window.sessionStorage.token)
+      }
+    window.location.reload()
+    })
+  }
+
   render() {
     return (
       <div style={styles.divStyle}>
@@ -38,6 +69,7 @@ class Profile extends Component {
           <p>LastName: {this.state.user.lastName}</p>
           <p>Email: {this.state.user.email}</p>
           <p>Address: {this.state.user.homeAddress}</p>
+          <button>Edit Profile</button>
         </div>
         <div>
           <h1>Your Shipping Addresses</h1>
@@ -45,7 +77,10 @@ class Profile extends Component {
             <div key={i}>
               <p>{address.street}</p>
               <p>{address.city}, {address.state} {address.zip}</p>
+              <button onClick={()=>this.delete_address(address.street,address.city,
+                address.state,address.zip)}>Delete Shipping Address</button>
             </div>)}
+          <button>Add Shipping Address</button>
         </div>
         <div>
           <h1>Credit Card Information</h1>
@@ -54,7 +89,10 @@ class Profile extends Component {
             <p>{cards.cardCompany}</p>
             <p>{cards.cardNumber}</p>
             <p>{cards.expirationDate}</p>
+            <button onClick={()=>this.delete_card(cards.cardNumber,cards.cardCompany,
+              cards.expirationDate)}>Delete Credit Card</button>
           </div>)}
+          <button>Add Credit Card</button>
         </div>
       </div>
     );

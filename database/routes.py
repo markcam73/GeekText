@@ -344,8 +344,97 @@ def profile():
                 "creditCards": cards,
                 "status": 200
         }
-
-
-
-
         return jsonify(to_return)
+@app.route('/profile/edit', methods=['POST'])
+def edit_profile():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        row = cur.fetchone()
+        userid = row["UserID"]
+
+        if request.json["username"]:
+            cur.execute("UPDATE Users SET username = ?",[request.json["username"]])
+        if request.json["firstName"]:
+            cur.execute("UPDATE Users SET FirstName = ?",[request.json["firstName"]])
+        if request.json["lastName"]:
+            cur.execute("UPDATE Users SET LastName = ?",[request.json["lastName"]])
+        if request.json["homeAddress"]:
+            cur.execute("UPDATE Users SET HomeAddress = ?",[request.json["homeAddress"]])
+    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+
+
+@app.route('/profile/insert/card', methods=['POST'])
+def insert_card():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        row = cur.fetchone()
+        userid = row["UserID"]
+
+        if not request.json["cardCompany"]:
+            return jsonify({"status": 400, "error": "invalid credit card company"})
+        if not request.json["cardNumber"]:
+            return jsonify({"status": 400, "error": "invalid credit card number"})
+        if not request.json["expirationDate"]:
+            return jsonify({"status": 400, "error": "invalid expiration date"})
+        if not request.json["secruityCode"]:
+            return jsonify({"status": 400, "error": "invalid secruity code"})
+
+        cur.execute("INSERT INTO PaymentInformation(UserID,CreditCardNumber,CreditCardCompany,ExpirationDate,SecruityCode) VALUES(?,?,?,?,?)", [userid,request.json["cardNumber"],request.json["cardCompany"],request.json["expirationDate"],request.json["secruityCode"]])
+    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+
+
+@app.route('/profile/delete/card', methods=['POST'])
+def delete_card():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        row = cur.fetchone()
+        userid = row["UserID"]
+
+        cur.execute("DELETE FROM PaymentInformation WHERE UserID=? and CreditCardNumber=? and CreditCardCompany=? and ExpirationDate=?", [userid,request.json["cardNumber"],request.json["cardCompany"],request.json["expirationDate"]])
+    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+
+
+@app.route('/profile/insert/shippingaddress', methods=['POST'])
+def insert_shipping_address():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        row = cur.fetchone()
+        userid = row["UserID"]
+
+        if not request.json["street"]:
+            return jsonify({"status": 400, "error": "invalid street"})
+        if not request.json["city"]:
+            return jsonify({"status": 400, "error": "invalid city"})
+        if not request.json["state"]:
+            return jsonify({"status": 400, "error": "invalid state"})
+        if not request.json["zipcode"]:
+            return jsonify({"status": 400, "error": "invalid zipcode"})
+
+        cur.execute("INSERT INTO ShippingAddresses(UserID,street,city,state,zipcode) VALUES(?,?,?,?,?)", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])
+    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+
+
+@app.route('/profile/delete/shippingaddress', methods=['POST'])
+def delete_shipping_address():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        row = cur.fetchone()
+        userid = row["UserID"]
+
+        cur.execute("DELETE FROM ShippingAddresses WHERE UserID=? and street=? and city=? and state=? and zipcode=?", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])
+    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
