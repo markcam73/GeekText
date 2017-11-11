@@ -438,3 +438,12 @@ def delete_shipping_address():
 
         cur.execute("DELETE FROM ShippingAddresses WHERE UserID=? and street=? and city=? and state=? and zipcode=?", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])
     return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+
+@app.route("/shopcart/savecart", methods=['POST'])
+def save_cart():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO ShoppingCart(UserID,BookID,Quantity) VALUES(?,?,?)", [request.json["userid"],request.json["bookID"],request.json["quantity"]])
+    return jsonify({"status":200})
