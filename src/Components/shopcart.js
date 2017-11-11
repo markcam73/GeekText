@@ -119,8 +119,9 @@ class ShopCart extends Component{
                 <ul>
                     {items}
                 </ul>
-                <div>Total: ${this.state.totalPrice} </div>
-                <button onClick = {this.saveItems}> Save Items For Later </button>
+                <div><h1>Total: ${this.state.totalPrice} </h1></div>
+                <div><button> Checkout </button></div>
+                <div><button onClick = {this.saveItems}> Save Items For Later </button></div>
             </div>
         );
         var empty = <div className="alert alert-info">Cart is empty</div>;
@@ -130,7 +131,6 @@ class ShopCart extends Component{
                     <div>Your Cart: </div>
                     <div className="panel-body">
                         {items.length > 0 ? body : empty}
-                        
                     </div>
                 </div>
             </div>
