@@ -77,7 +77,7 @@ class BookDetailed extends Component {
               <h1>{this.state.book.title}</h1>
               <p>Author: <a href={"/#/books/author/" + encodeURIComponent(this.state.book.author)}>{this.state.book.author}</a></p>
               <p>Genre: {this.state.book.genre}</p>
-              <p>Price: ${this.state.book.price}</p>
+              <p>Price: {this.state.book.price}</p>
               <p>Release date: {this.state.book.releaseDate}</p>
               <p>Description: {this.state.book.description}</p>
               <div style={styles.ratingDiv}>
