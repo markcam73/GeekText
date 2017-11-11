@@ -350,20 +350,23 @@ def edit_profile():
     with con:
         con.row_factory = lite.Row
         cur = con.cursor()
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
 
-        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [username])
         row = cur.fetchone()
-        userid = row["UserID"]
-
+        user_id = row["UserID"]
+        new_username=username
         if request.json["username"]:
-            cur.execute("UPDATE Users SET username = ?",[request.json["username"]])
+            new_username=request.json["username"]
+            cur.execute("UPDATE Users SET username = ? WHERE UserID=?",[request.json["username"],user_id])
         if request.json["firstName"]:
-            cur.execute("UPDATE Users SET FirstName = ?",[request.json["firstName"]])
+            cur.execute("UPDATE Users SET FirstName = ? WHERE UserID=?",[request.json["firstName"],user_id])
         if request.json["lastName"]:
-            cur.execute("UPDATE Users SET LastName = ?",[request.json["lastName"]])
+            cur.execute("UPDATE Users SET LastName = ? WHERE UserID=?",[request.json["lastName"],user_id])
         if request.json["homeAddress"]:
-            cur.execute("UPDATE Users SET HomeAddress = ?",[request.json["homeAddress"]])
-    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+            cur.execute("UPDATE Users SET HomeAddress = ? WHERE UserID=?",[request.json["homeAddress"],user_id])
+    return jsonify({"status":200, "token": jwt.encode({'username': new_username}, 'secret', algorithm='HS256')})
 
 
 @app.route('/profile/insert/card', methods=['POST'])
