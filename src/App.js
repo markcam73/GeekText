@@ -38,7 +38,7 @@ class App extends Component {
 
   componentDidMount(){
     PubSub.subscribe('cart.added', this.handleAdd)
-    PubSub.subscribe('cart.removed', this.handleHeader)
+    PubSub.subscribe('cart.edited', this.handleHeader)
     PubSub.subscribe('change.price',this.handleTotal)
   }
   createCartElement(item){
@@ -59,6 +59,9 @@ class App extends Component {
   }
 
   handleTotal(e, total){
+    if(this.state.cartTotal === 0){
+      return;
+    }
     var temp = this.state.cartTotal - total.price;
     this.setState({
       cartTotal: temp.toFixed(2)
