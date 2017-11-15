@@ -8,7 +8,6 @@ class CommentBox extends Component {
   constructor(props) {
     super(props)
     this.state= {comments: []};
-    this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
   }
   loadCommentsFromServer(bookID) {
 	  //old ajax
@@ -41,8 +40,13 @@ class CommentBox extends Component {
 
   }
   componentDidMount() {
+    this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
+
     this.loadCommentsFromServer(this.props.bookID);
-    setInterval(()=>this.loadCommentsFromServer(this.props.bookID), this.props.pollInterval);
+    this.timeout = setTimeout( ()=>this.loadCommentsFromServer(this.props.bookID), this.props.pollInterval);
+  }
+  componentWillUnmount() {
+     clearTimeout(this.timeout);
   }
   render() {
     return (
