@@ -58,6 +58,25 @@ class Profile extends Component {
     window.location.reload()
     })
   }
+  edit_profile(username, firstName, lastName, email, homeAddress){
+    var payload = {
+      "username": this.state.user.username,
+      "firstName": this.state.user.firstName,
+      "lastName": this.state.user.lastName,
+      "email": this.state.user.email,
+      "homeAddress": this.state.user.homeAddress
+    };
+    API.changePath("/profile/edit", payload)
+  }
+  add_address(){
+    var payload = {
+      "username": this.state.user.username
+    }
+    API.changePath("profile/insert/shippingaddress",)
+  }
+  add_card(){
+    API.changePath("profile/insert/card")
+  }
 
   render() {
     return (
@@ -69,7 +88,9 @@ class Profile extends Component {
           <p>LastName: {this.state.user.lastName}</p>
           <p>Email: {this.state.user.email}</p>
           <p>Address: {this.state.user.homeAddress}</p>
-          <button>Edit Profile</button>
+          <button onClick={()=>this.edit_profile(this.state.user.username,
+            this.state.user.firstName, this.state.user.lastName, this.state.user.email,
+            this.state.user.homeAddress)}>Edit Profile</button>
         </div>
         <div>
           <h1>Your Shipping Addresses</h1>
@@ -80,7 +101,7 @@ class Profile extends Component {
               <button onClick={()=>this.delete_address(address.street,address.city,
                 address.state,address.zip)}>Delete Shipping Address</button>
             </div>)}
-          <button>Add Shipping Address</button>
+          <button onClick={()=>this.add_address()}>Add Shipping Address</button>
         </div>
         <div>
           <h1>Credit Card Information</h1>
@@ -92,7 +113,7 @@ class Profile extends Component {
             <button onClick={()=>this.delete_card(cards.cardNumber,cards.cardCompany,
               cards.expirationDate)}>Delete Credit Card</button>
           </div>)}
-          <button>Add Credit Card</button>
+          <button onClick={()=>this.add_card()}>Add Credit Card</button>
         </div>
       </div>
     );
