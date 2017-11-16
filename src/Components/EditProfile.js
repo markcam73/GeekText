@@ -5,6 +5,7 @@ class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: window.sessionStorage.token,
       username: '',
       password: '',
       confirmPassword:"",

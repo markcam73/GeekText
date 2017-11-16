@@ -364,6 +364,8 @@ def edit_profile():
             cur.execute("UPDATE Users SET FirstName = ? WHERE UserID=?",[request.json["firstName"],user_id])
         if request.json["lastName"]:
             cur.execute("UPDATE Users SET LastName = ? WHERE UserID=?",[request.json["lastName"],user_id])
+        if request.json["email"]:
+            cur.execute("UPDATE Users SET Email = ? WHERE UserID=?",[request.json["email"],user_id])
         if request.json["homeAddress"]:
             cur.execute("UPDATE Users SET HomeAddress = ? WHERE UserID=?",[request.json["homeAddress"],user_id])
     return jsonify({"status":200, "token": jwt.encode({'username': new_username}, 'secret', algorithm='HS256')})
