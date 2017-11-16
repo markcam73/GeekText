@@ -5,12 +5,13 @@ class AddCreditCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                    username: "",
-                    cardCompany:"",
-                    cardNumber:"",
-                    securityCode:"",
-                    expirationDate:""
-                  };
+      token: window.sessionStorage.token,
+      username: "",
+      cardCompany:"",
+      cardNumber:"",
+      securityCode:"",
+      expirationDate:""
+    };
 
     this.handleValueChange = this.handleValueChange.bind(this);
     this.add = this.add.bind(this);
@@ -33,7 +34,7 @@ class AddCreditCard extends Component {
   render() {
     return (
       <div style={styles.containerStyle} >
-        <form style={styles.containerStyle} onSubmit={this.signup}>
+        <form style={styles.containerStyle} onSubmit={this.add}>
           <label>
             Credit Card Company:
             <input type="cardCompany" value={this.state.cardCompany} onChange={(e)=>this.handleValueChange(e,"cardCompany")} />
@@ -51,7 +52,6 @@ class AddCreditCard extends Component {
             <input type="expirationDate" value={this.state.expirationDate} onChange={(e)=>this.handleValueChange(e,"expirationDate")} />
           </label>
           <input type="submit" value="Submit" />
-          {this.state.incorrect ? <p>{this.state.incorrect}</p> : null}
         </form>
       </div>
     );

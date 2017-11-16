@@ -5,12 +5,13 @@ class AddShippingAddress extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                    username: "",
-                    street:"",
-                    city:"",
-                    state:"",
-                    zipcode:""
-                  };
+      token: window.sessionStorage.token,
+      username: "",
+      street:"",
+      city:"",
+      state:"",
+      zipcode:""
+    };
 
     this.handleValueChange = this.handleValueChange.bind(this);
     this.add = this.add.bind(this);
@@ -33,7 +34,7 @@ class AddShippingAddress extends Component {
   render() {
     return (
       <div style={styles.containerStyle} >
-        <form style={styles.containerStyle} onSubmit={this.signup}>
+        <form style={styles.containerStyle} onSubmit={this.add}>
           <label>
             Street:
             <input type="Street" value={this.state.street} onChange={(e)=>this.handleValueChange(e,"street")} />

@@ -387,10 +387,10 @@ def insert_card():
             return jsonify({"status": 400, "error": "invalid credit card number"})
         if not request.json["expirationDate"]:
             return jsonify({"status": 400, "error": "invalid expiration date"})
-        if not request.json["secruityCode"]:
-            return jsonify({"status": 400, "error": "invalid secruity code"})
+        if not request.json["securityCode"]:
+            return jsonify({"status": 400, "error": "invalid security code"})
 
-        cur.execute("INSERT INTO PaymentInformation(UserID,CreditCardNumber,CreditCardCompany,ExpirationDate,SecruityCode) VALUES(?,?,?,?,?)", [userid,request.json["cardNumber"],request.json["cardCompany"],request.json["expirationDate"],request.json["secruityCode"]])
+        cur.execute("INSERT INTO PaymentInformation(UserID,CreditCardNumber,CreditCardCompany,ExpirationDate,SecruityCode) VALUES(?,?,?,?,?)", [userid,request.json["cardNumber"],request.json["cardCompany"],request.json["expirationDate"],request.json["securityCode"]])
     return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
 
 

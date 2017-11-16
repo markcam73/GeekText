@@ -20,6 +20,24 @@ class EditProfile extends Component {
     this.updateProfile = this.updateProfile.bind(this);
 
   }
+  componentWillMount(){
+    var _this = this;
+    if (this.props.location.state.username){
+      _this.setState({username:this.props.location.state.username})
+    }
+    if (this.props.location.state.firstName){
+      _this.setState({firstName:this.props.location.state.firstName})
+    }
+    if (this.props.location.state.lastName){
+      _this.setState({lastName:this.props.location.state.lastName})
+    }
+    if (this.props.location.state.email){
+      _this.setState({email:this.props.location.state.email})
+    }
+    if (this.props.location.state.homeAddress){
+      _this.setState({homeAddress:this.props.location.state.homeAddress})
+    }
+  }
   handleValueChange(event, key) {
     var obj ={}
     obj[key]=event.target.value
