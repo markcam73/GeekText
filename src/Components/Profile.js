@@ -30,6 +30,7 @@ class Profile extends Component {
   }
   delete_address(street, city, state, zip){
     var payload = {
+      "token": window.sessionStorage.token,
       "username": this.state.user.username,
       "street": street,
       "city": city,
@@ -46,6 +47,7 @@ class Profile extends Component {
   }
   delete_card(cardNumber,cardCompany,expirationDate){
     var payload = {
+      "token": window.sessionStorage.token,
       "username": this.state.user.username,
       "cardNumber": cardNumber,
       "cardCompany": cardCompany,

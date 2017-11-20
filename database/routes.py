@@ -376,8 +376,10 @@ def insert_card():
     with con:
         con.row_factory = lite.Row
         cur = con.cursor()
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
 
-        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [username])
         row = cur.fetchone()
         userid = row["UserID"]
 
@@ -399,8 +401,10 @@ def delete_card():
     with con:
         con.row_factory = lite.Row
         cur = con.cursor()
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
 
-        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [username])
         row = cur.fetchone()
         userid = row["UserID"]
 
@@ -414,7 +418,10 @@ def insert_shipping_address():
         con.row_factory = lite.Row
         cur = con.cursor()
 
-        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [username])
         row = cur.fetchone()
         userid = row["UserID"]
 
@@ -428,7 +435,7 @@ def insert_shipping_address():
             return jsonify({"status": 400, "error": "invalid zipcode"})
 
         cur.execute("INSERT INTO ShippingAddresses(UserID,street,city,state,zipcode) VALUES(?,?,?,?,?)", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])
-    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+    return jsonify({"status":200})
 
 
 @app.route('/profile/delete/shippingaddress', methods=['POST'])
@@ -436,13 +443,15 @@ def delete_shipping_address():
     with con:
         con.row_factory = lite.Row
         cur = con.cursor()
+        user_token = request.json["token"]
+        username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
 
-        cur.execute("SELECT UserID FROM Users WHERE username=?", [request.json["username"]])
+        cur.execute("SELECT UserID FROM Users WHERE username=?", [username])
         row = cur.fetchone()
         userid = row["UserID"]
 
         cur.execute("DELETE FROM ShippingAddresses WHERE UserID=? and street=? and city=? and state=? and zipcode=?", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])
-    return jsonify({"status":200, "token": jwt.encode({'username': request.json["username"]}, 'secret', algorithm='HS256')})
+    return jsonify({"status":200})
 
 @app.route("/shopcart/savecart", methods=['POST'])
 def save_cart():

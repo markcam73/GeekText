@@ -26,7 +26,6 @@ class AddShippingAddress extends Component {
     var _this = this;
     API.postRequest(_this.state,'/profile/insert/shippingaddress').then((jsonRes) => {
           if (jsonRes.status===200){
-            window.sessionStorage.token=jsonRes.token;
             API.changePath("/profile",{username:_this.state.username})
           }
     })

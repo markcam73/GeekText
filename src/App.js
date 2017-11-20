@@ -14,6 +14,12 @@ class App extends Component {
         headerCount:0
       }
     }else if(window.sessionStorage.token) {
+      this.state={
+        username:"",
+        items: [],
+        cartTotal:0,
+        headerCount:0
+      }
       var payload = {
           token: window.sessionStorage.token
       };
