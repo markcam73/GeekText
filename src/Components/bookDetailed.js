@@ -74,12 +74,12 @@ class BookDetailed extends Component {
               <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
             </div>
             <div style={styles.bookInfo}>
-              <h1>{this.state.book.title}</h1>
-              <p>Author: <a href={"/#/books/author/" + encodeURIComponent(this.state.book.author)}>{this.state.book.author}</a></p>
-              <p>Genre: {this.state.book.genre}</p>
-              <p>Price: {this.state.book.price}</p>
-              <p>Release date: {this.state.book.releaseDate}</p>
-              <p>Description: {this.state.book.description}</p>
+              <h1><b>{this.state.book.title}</b></h1>
+              <p><b>Author:</b> <a href={"/#/books/author/" + encodeURIComponent(this.state.book.author)}>{this.state.book.author}</a></p>
+              <p><b>Genre: </b>{this.state.book.genre}</p>
+              <p><b>Price:</b> ${this.state.book.price}</p>
+              <p><b>Release Date: </b> {this.state.book.releaseDate}</p>
+              <p>{this.state.book.description}</p>
               <div style={styles.ratingDiv}>
                 <p>Rating: </p>
                 <StarRatingComponent
@@ -102,7 +102,7 @@ class BookDetailed extends Component {
             </div>
           </div>
           <div style={styles.rightDiv}>
-              <h1>View similar titles</h1>
+              <h1><small>Other <i>{this.state.book.genre}</i> Titles</small></h1>
               <BookList hideSort={true}
                         genre={this.state.book.genre}
                         minimal={true}
@@ -125,24 +125,26 @@ var styles ={
   leftDiv:{
     display: "flex",
     width:"50%",
-    marginRight:"auto"
+    marginRight:"auto",
+    marginLeft:"auto"
   },
   leftInnerDiv:{
     display: "block",
     width:"50%",
-    marginRight:"auto"
+    marginRight:"3%"
   },
   rightDiv:{
-    width:"40%"
+    width:"50%"
   },
   imgStyle:{
     width:"100%"
   },
   ratingDiv:{
       display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height:"19px"
+      justifyContent: "auto",
+      alignItems: "auto",
+      height:"19px",
+      marginRight:"auto"
   }
 }
 export default BookDetailed;

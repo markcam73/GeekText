@@ -29,7 +29,8 @@ class Home extends Component {
     };
     return (
       <div>
-        <h1>Top sellers</h1>
+    <h2><center><b>This Week&#8217;s Best Sellers</b></center></h2>
+    <p> </p>
         <Slider {...settings}>
           {this.state.topFive.map((book,i)=>
             <div key={i}>
@@ -45,6 +46,6 @@ var styles ={
     width:"65%",
     marginLeft: "auto",
     marginRight: "auto"
-  },
+  }
 }
 export default Home;

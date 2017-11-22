@@ -131,10 +131,12 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <button onClick={()=>API.changePath("/home/",{username:this.state.username})}>Home</button>
-          <button onClick={()=>API.changePath("/books/",{username:this.state.username})}>Books</button>
-          <button onClick={()=>API.changePath("/profile",{username:this.state.username})}>Profile</button>
-          <button onClick={()=>API.changePath("/shopcart/", {username:this.state.username, books:this.state.items, cartTotal: this.state.cartTotal, header: this.state.headerCount})} style = {{float: 'right', height: '32px'}}> <img src = './cart.png' alt="cart" style = {{width: '40px', height: '25px'}}/>
+        <h1>GeekText<img src="favicon.ico" alt="icon" style={{float: 'center', width: '32px', height: '32px'}}></img></h1>
+          <p><small>Your one stop book shop.</small></p>
+          <button onClick={()=>API.changePath("/home/",{username:this.state.username})}style = {{height: '24px'}}><small>Best Sellers</small></button>
+          <button onClick={()=>API.changePath("/books/",{username:this.state.username})}style = {{height: '24px'}}><small>Browse</small></button>
+          <button onClick={()=>API.changePath("/profile",{username:this.state.username})}style = {{height: '24px'}}><small>Account</small></button>
+          <button onClick={()=>API.changePath("/shopcart/", {username:this.state.username, books:this.state.items, cartTotal: this.state.cartTotal, header: this.state.headerCount})} style = {{float: 'right', height: '24px'}}> <img src = './cart.png' alt="cart" style = {{float: 'center', width: '32px', height: '20px'}}/>
             {this.state.headerCount > 0 ? content: empty}
           </button>
         </div>

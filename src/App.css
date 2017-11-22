@@ -1,18 +1,22 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-header {
   background-color: #222;
-  padding: 20px;
+  padding: 8px;
   color: white;
   text-align: left;
+  line-height: 1px;
+  padding-bottom: 10px;
   position: fixed;
   width:100%;
+  opacity: 100%;
 }
 
 .App-body {
-  padding-top: 80px;
+  padding-top: 140px;
+  line-height: 16px;
 }
 
 @keyframes App-logo-spin {

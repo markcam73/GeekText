@@ -82,52 +82,87 @@ class Profile extends Component {
 
   render() {
     return (
-      <div style={styles.divStyle}>
-        <div>
-          <h1>Profile</h1>
-          <p>Username: {this.state.user.username}</p>
-          <p>FirstName: {this.state.user.firstName}</p>
-          <p>LastName: {this.state.user.lastName}</p>
-          <p>Email: {this.state.user.email}</p>
-          <p>Address: {this.state.user.homeAddress}</p>
-          <button onClick={()=>this.edit_profile(this.state.user.username,
-            this.state.user.firstName, this.state.user.lastName, this.state.user.email,
-            this.state.user.homeAddress)}>Edit Profile</button>
+      <div>
+      <div style={styles.containerDiv}>
+            <div style={styles.leftDiv}>
+              <h2>Account Information</h2>
+              <p><b>Username:</b> {this.state.user.username}</p>
+              <p><b>First Name:</b> {this.state.user.firstName}</p>
+              <p><b>Last Name:</b> {this.state.user.lastName}</p>
+              <p><b>Email:</b> {this.state.user.email}</p>
+              <p><b>Billing Address:</b> {this.state.user.homeAddress}</p>
+              <button onClick={()=>this.edit_profile(this.state.user.username,
+                this.state.user.firstName, this.state.user.lastName, this.state.user.email,
+                this.state.user.homeAddress)}style={{fontSize: '12px', height: '20px'}}>Edit Profile</button>
+            </div>
+              
+
+            <div style={styles.leftInnerDiv}>
+              <h2>Shipping Information</h2>
+              {this.state.user.shippingAddresses.map((address,i)=>
+                <div key={i}>
+                  <p>{address.street}</p>
+                  <p>{address.city}, {address.state} {address.zip}</p>
+                  <p><button onClick={()=>this.delete_address(address.street,address.city,
+                    address.state,address.zip)}style={{fontSize: '12px', height: '20px'}}>Delete</button></p>
+                </div>)}
+              <button onClick={()=>this.add_address()}style={{fontSize: '12px', height: '20px'}}>Add Shipping Address</button>
+            </div>
+          
+
+            <div style={styles.rightDiv}>
+              <h2>Payment Information</h2>
+              {this.state.user.creditCards.map((cards,i)=>
+              <div key={i}>
+              <p>{cards.cardCompany}</p>
+              <p>{cards.cardNumber}</p>
+              <p>{cards.expirationDate}</p>
+              <p><button onClick={()=>this.delete_card(cards.cardNumber,cards.cardCompany,
+              cards.expirationDate)}style={{fontSize: '12px', height: '20px'}}>Delete</button></p>
+              </div>)}
+              <button onClick={()=>this.add_card()}style={{fontSize: '12px', height: '20px'}}>Add Payment Method</button>
+            </div>
         </div>
-        <div>
-          <h1>Your Shipping Addresses</h1>
-          {this.state.user.shippingAddresses.map((address,i)=>
-            <div key={i}>
-              <p>{address.street}</p>
-              <p>{address.city}, {address.state} {address.zip}</p>
-              <button onClick={()=>this.delete_address(address.street,address.city,
-                address.state,address.zip)}>Delete Shipping Address</button>
-            </div>)}
-          <button onClick={()=>this.add_address()}>Add Shipping Address</button>
-        </div>
-        <div>
-          <h1>Credit Card Information</h1>
-          {this.state.user.creditCards.map((cards,i)=>
-          <div key={i}>
-            <p>{cards.cardCompany}</p>
-            <p>{cards.cardNumber}</p>
-            <p>{cards.expirationDate}</p>
-            <button onClick={()=>this.delete_card(cards.cardNumber,cards.cardCompany,
-              cards.expirationDate)}>Delete Credit Card</button>
-          </div>)}
-          <button onClick={()=>this.add_card()}>Add Credit Card</button>
-        </div>
-      </div>
+    </div>
     );
   }
 }
 var styles ={
-  divStyle:{
-    display: "inline-block",
-    marginBottom: "8px",
-    width: "calc(25% - 4px)",
-    marginRight: "8px",
-    cursor: "hand"
+  h2:{
+    fontSize: "16px"
+  },
+  h3:{
+    fontSize: "16px"
+  },
+  h4:{
+    fontSize: "12px"
+  },
+  containerDiv:{
+    display: "flex",
+    font: "50%",
+    background: "#cccccc"
+
+  },
+  leftDiv:{
+    padding:"10px",
+    display: "left",
+    marginRight:"auto",
+    marginLeft:"10%",
+    lineHeight:"12px"
+  },
+  leftInnerDiv:{
+    display: "fixed",
+    display: "center",
+    padding:"10px",
+    lineHeight:"12px"
+
+  },
+  rightDiv:{
+    display: "right",
+    marginLeft: "auto",
+    marginRight:"10%",
+    padding:"10px",
+    lineHeight:"12px"
   },
   imgStyle:{
     width:"100%"

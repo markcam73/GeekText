@@ -104,7 +104,8 @@ def books():
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)

@@ -44,6 +44,8 @@ class Login extends Component {
     return (
       <div style={styles.containerStyle} >
         <form style={styles.containerStyle} onSubmit={this.handleLogin}>
+          
+          <h1>GeekText <img src="favicon.ico" alt="icon" style={{width: '32px', height: '32px'}}></img></h1>
           <label>
             Username:
             <input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
@@ -67,6 +69,16 @@ var styles={
     marginLeft: "auto",
     marginRight: "auto",
     textAlign: "center"
+
+  },
+  title:{
+  backgroundColor: "#222",
+  padding: "8px",
+  color: "white",
+  textAlign: "center",
+  lineHeight: "1px",
+  position: "fixed",
+  width:"100%",
   }
 }
 export default Login;

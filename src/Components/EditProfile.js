@@ -62,6 +62,7 @@ class EditProfile extends Component {
     return (
       <div style={styles.containerStyle} >
         <form style={styles.containerStyle} onSubmit={this.updateProfile}>
+          <h1><small>Edit Account Information</small></h1>
           <label>
             Username:
             <input type="text" value={this.state.username} onChange={(e)=>this.handleValueChange(e,"username")} />
