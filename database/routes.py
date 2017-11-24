@@ -236,6 +236,21 @@ def comment_book():
         cur.execute("INSERT INTO Comments(BookId, UserID, Comment) VALUES (?,?,?)", [book_id, user_id,comment])
 
         return jsonify({"status":200})
+
+@app.route("/author/<author>")
+def get_bio(author):
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books WHERE Author=?", [author])
+        row = cur.fetchone()
+        return jsonify({
+                            "status": 200,
+                            "author": row["Author"],
+                            "authorBio": row["AuthorBio"]
+                        })
+
 @app.route("/books/<book_id>/comments")
 def get_comments(book_id):
     with con:
@@ -306,7 +321,6 @@ def get_book(book_ID):
             "pubInfo": row["PubInfo"]
         }
         return jsonify(to_return)
-
 @app.route("/profile", methods=['POST'])
 def profile():
     with con:
