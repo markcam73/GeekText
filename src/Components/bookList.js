@@ -97,7 +97,7 @@ class BookList extends Component {
       <div>
         {this.props.hideSort !== true?
         <div style={styles.sortDivStyle}>
-          <p style={styles.selectLabelStyle}> Browse By genre:</p>
+          <p style={styles.selectLabelStyle}> Genre</p>
           <select style={styles.selectStyle} defaultValue={this.state.genre} onChange={this.handleGenreChange}>
             <option value="All">All</option>
             <option value="Romance">Romance</option>
@@ -106,7 +106,7 @@ class BookList extends Component {
             <option value="Literature & Fiction">Literature & Fiction</option>
             <option value="Humor & Satire">Humor & Satire</option>
           </select>
-          <p style={styles.selectLabelStyle}> Sort By:</p>
+          <p style={styles.selectLabelStyle}> Sort by</p>
           <select style={styles.selectStyle} defaultValue={this.state.sort} onChange={this.handleSortChange}>
             <option value="title">Title</option>
             <option value="author">Author</option>
@@ -114,7 +114,7 @@ class BookList extends Component {
             <option value="rating">Rating</option>
             <option value="releaseDate">Release Date</option>
           </select>
-          <p style={styles.selectLabelStyle}>Order:</p>
+          <p style={styles.selectLabelStyle}>Order</p>
           <select style={styles.selectStyle} defaultValue={this.state.order} onChange={this.handleOrderChange}>
             <option value={1}>Ascending</option>
             <option value={-1}>Descending</option>
