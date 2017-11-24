@@ -70,7 +70,8 @@ class BookDetailed extends Component {
         <div style={styles.containerDiv}>
           <div style={styles.leftDiv}>
             <div style={styles.leftInnerDiv}>
-              <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
+              
+              <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover" />
               <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
             </div>
             <div style={styles.bookInfo}>
@@ -80,6 +81,7 @@ class BookDetailed extends Component {
               <p><b>Price:</b> ${this.state.book.price}</p>
               <p><b>Release Date: </b> {this.state.book.releaseDate}</p>
               <p>{this.state.book.description}</p>
+              <p>Published by {this.state.book.pubInfo}</p>
               <div style={styles.ratingDiv}>
                 <p>Rating: </p>
                 <StarRatingComponent
@@ -129,7 +131,6 @@ var styles ={
     marginLeft:"auto"
   },
   leftInnerDiv:{
-    display: "block",
     width:"50%",
     marginRight:"3%"
   },

@@ -105,7 +105,9 @@ def books():
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
                 "description": row["Description"],
+                "authorBio": row["AuthorBio"],
                 "pubInfo": row["PubInfo"]
+
 
             })
         return jsonify(to_return)
@@ -130,7 +132,9 @@ def top_books():
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "authorBio": row["AuthorBio"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)
@@ -154,7 +158,9 @@ def get_books_by_author(author):
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "authorBio": row["AuthorBio"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)
@@ -178,7 +184,9 @@ def get_books_in_genre(genre):
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "authorBio": row["AuthorBio"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)
@@ -294,7 +302,9 @@ def get_book(book_ID):
             "rating": row["Rating"],
             "price": row["Price"],
             "releaseDate": row["ReleaseDate"],
-            "description": row["Description"]
+            "description": row["Description"],
+            "authorBio": row["AuthorBio"],
+            "pubInfo": row["PubInfo"]
 
         }
         return jsonify(to_return)
