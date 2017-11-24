@@ -133,6 +133,8 @@ class BookList extends Component {
                   price={book.price}
                   releaseDate={book.releaseDate}
                   description={book.description}
+                  authorBio={book.authorBio}
+                  pubInfo={book.pubInfo}
                   minimal ={this.props.minimal}
                   /> : null)
           )}
