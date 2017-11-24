@@ -16,9 +16,9 @@ rawMarkup() {
  render() {
    return (
      <div className="comment">
-       <h2 className="commentAuthor">
-         {this.props.author}
-       </h2>
+       <h5 className="commentAuthor">
+         &nbsp; {this.props.author}
+       </h5>
        <span dangerouslySetInnerHTML={this.rawMarkup()} />
      </div>
    );
