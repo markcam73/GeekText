@@ -4,13 +4,14 @@ import API from '../API';
 import PubSub from 'pubsub-js';
 import BookList from './bookList';
 import CommentBox from './CommentBox';
+import Lightbox from 'react-image-lightbox';
 
 class BookDetailed extends Component {
   constructor(supplied) {
       super(supplied);
       this.state={
-        book:{id:0},
-        myRating:0
+        book:{id:0,src:""},
+        lightboxIsOpen: false
       }
       this.addItemToCart = this.addItemToCart.bind(this);
   }
@@ -64,14 +65,26 @@ class BookDetailed extends Component {
         }
     })
   }
+
+  changeLightBox(){
+    this.setState({lightboxIsOpen:!this.state.lightboxIsOpen})
+  }
+
   render() {
     return (
       <div>
         <div style={styles.containerDiv}>
           <div style={styles.leftDiv}>
             <div style={styles.leftInnerDiv}>
+<<<<<<< HEAD
               
               <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover" />
+=======
+              <img style={styles.imgStyle} onClick={()=>this.changeLightBox()} src={this.state.book.imageSrc} alt="cover"/>
+              {this.state.lightboxIsOpen &&
+                <Lightbox onCloseRequest={()=>this.changeLightBox()} mainSrc={this.state.book.imageSrc}/>
+              }
+>>>>>>> a9dc07c24fe937d29ebca3cacb1d3610cc4199a6
               <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
             </div>
             <div style={styles.bookInfo}>
