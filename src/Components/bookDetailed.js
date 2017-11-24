@@ -77,19 +77,12 @@ class BookDetailed extends Component {
         <div style={styles.containerDiv}>
           <div style={styles.leftDiv}>
             <div style={styles.leftInnerDiv}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-              
-              <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover" />
-=======
+
               <img style={styles.imgStyle} onClick={()=>this.changeLightBox()} src={this.state.book.imageSrc} alt="cover"/>
               {this.state.lightboxIsOpen &&
                 <Lightbox onCloseRequest={()=>this.changeLightBox()} mainSrc={this.state.book.imageSrc}/>
               }
->>>>>>> a9dc07c24fe937d29ebca3cacb1d3610cc4199a6
-=======
-              <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
->>>>>>> parent of c47fde3... Changez
+
               <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
             </div>
             <div style={styles.bookInfo}>
