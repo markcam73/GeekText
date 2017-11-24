@@ -11,6 +11,7 @@ class BookDetailed extends Component {
       super(supplied);
       this.state={
         book:{id:0,src:""},
+        myRating:0,
         lightboxIsOpen: false
       }
       this.addItemToCart = this.addItemToCart.bind(this);
