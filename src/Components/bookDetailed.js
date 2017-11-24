@@ -78,6 +78,7 @@ class BookDetailed extends Component {
           <div style={styles.leftDiv}>
             <div style={styles.leftInnerDiv}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               
               <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover" />
 =======
@@ -86,6 +87,9 @@ class BookDetailed extends Component {
                 <Lightbox onCloseRequest={()=>this.changeLightBox()} mainSrc={this.state.book.imageSrc}/>
               }
 >>>>>>> a9dc07c24fe937d29ebca3cacb1d3610cc4199a6
+=======
+              <img style={styles.imgStyle}src={this.state.book.imageSrc} alt="cover"/>
+>>>>>>> parent of c47fde3... Changez
               <button className={'btn btn-primary'} onClick={this.addItemToCart}> {'Add to cart'}</button>
             </div>
             <div style={styles.bookInfo}>
@@ -95,7 +99,6 @@ class BookDetailed extends Component {
               <p><b>Price:</b> ${this.state.book.price}</p>
               <p><b>Release Date: </b> {this.state.book.releaseDate}</p>
               <p>{this.state.book.description}</p>
-              <p>Published by {this.state.book.pubInfo}</p>
               <div style={styles.ratingDiv}>
                 <p>Rating: </p>
                 <StarRatingComponent
@@ -145,6 +148,7 @@ var styles ={
     marginLeft:"auto"
   },
   leftInnerDiv:{
+    display: "block",
     width:"50%",
     marginRight:"3%"
   },

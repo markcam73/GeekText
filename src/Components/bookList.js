@@ -97,7 +97,7 @@ class BookList extends Component {
       <div>
         {this.props.hideSort !== true?
         <div style={styles.sortDivStyle}>
-          <p style={styles.selectLabelStyle}> Genre</p>
+          <p style={styles.selectLabelStyle}> Browse By genre:</p>
           <select style={styles.selectStyle} defaultValue={this.state.genre} onChange={this.handleGenreChange}>
             <option value="All">All</option>
             <option value="Romance">Romance</option>
@@ -106,7 +106,7 @@ class BookList extends Component {
             <option value="Literature & Fiction">Literature & Fiction</option>
             <option value="Humor & Satire">Humor & Satire</option>
           </select>
-          <p style={styles.selectLabelStyle}> Sort by</p>
+          <p style={styles.selectLabelStyle}> Sort By:</p>
           <select style={styles.selectStyle} defaultValue={this.state.sort} onChange={this.handleSortChange}>
             <option value="title">Title</option>
             <option value="author">Author</option>
@@ -114,7 +114,7 @@ class BookList extends Component {
             <option value="rating">Rating</option>
             <option value="releaseDate">Release Date</option>
           </select>
-          <p style={styles.selectLabelStyle}>Order</p>
+          <p style={styles.selectLabelStyle}>Order:</p>
           <select style={styles.selectStyle} defaultValue={this.state.order} onChange={this.handleOrderChange}>
             <option value={1}>Ascending</option>
             <option value={-1}>Descending</option>
@@ -133,8 +133,6 @@ class BookList extends Component {
                   price={book.price}
                   releaseDate={book.releaseDate}
                   description={book.description}
-                  authorBio={book.authorBio}
-                  pubInfo={book.pubInfo}
                   minimal ={this.props.minimal}
                   /> : null)
           )}
@@ -179,10 +177,8 @@ var styles={
   sortDivStyle:{
     display: "flex",
     flexWrap: "wrap",
-    alignItems: "right",
-    justifyContent: "left",
-    marginLeft: "2px",
-    marginRight: "10px"
+    alignItems: "center",
+    justifyContent: "center",
   },
   selectStyle:{
     marginLeft:"2px",
