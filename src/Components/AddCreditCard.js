@@ -10,7 +10,8 @@ class AddCreditCard extends Component {
       cardCompany:"",
       cardNumber:"",
       securityCode:"",
-      expirationDate:""
+      expirationDate:"",
+      incorrect:""
     };
 
     this.handleValueChange = this.handleValueChange.bind(this);
@@ -27,6 +28,8 @@ class AddCreditCard extends Component {
     API.postRequest(_this.state,'/profile/insert/card').then((jsonRes) => {
       if (jsonRes.status===200){
         API.changePath("/profile",{username:_this.state.username})
+      }else{
+        _this.setState({incorrect: jsonRes.error});
       }
     })
   }
@@ -51,6 +54,8 @@ class AddCreditCard extends Component {
             <input type="expirationDate" value={this.state.expirationDate} onChange={(e)=>this.handleValueChange(e,"expirationDate")} />
           </label>
           <input type="submit" value="Submit" />
+          {this.state.incorrect ? <p>{this.state.incorrect}</p> : null}
+
         </form>
       </div>
     );
