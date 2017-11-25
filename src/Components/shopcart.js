@@ -70,6 +70,7 @@ class ShopCart extends Component{
     }
 
     addQuantity(cartItem){
+      console.log(cartItem);
         var itemIndexInArray;
         this.state.items.some(function(item, index) {
           if(item.id === cartItem.id) {
@@ -80,10 +81,11 @@ class ShopCart extends Component{
           }
         });
         //assuming item to be added is always in array
-        if(this.state.items[itemIndexInArray].quantity > 1){
-            var stateCopy = Object.assign({}, this.state);
-            stateCopy.items[itemIndexInArray].quantity += 1;
-            this.setState(stateCopy);
+        if(this.state.items[itemIndexInArray].quantity > 0){
+            var items= this.state.items;
+            console.log(items[itemIndexInArray]);
+            items[itemIndexInArray].quantity += 1;
+            this.setState({items: items});
         }
         //tell parent about removal
         console.log(this.state);
@@ -140,7 +142,7 @@ class ShopCart extends Component{
                 "quantity": item.quantity,
                 "price": item.price,
                 "title": item.title,
-                "imageSrc": item.imageSrc 
+                "imageSrc": item.imageSrc
             }
             API.postRequest(payload, "/shopcart/savecart").then((jsonRes)=>{})
         })
@@ -149,14 +151,15 @@ class ShopCart extends Component{
 
     render(){
         var items = this.state.items.map(function(item) {
+          console.log(item.id);
             return (
                 <li key={item.id} style ={{listStyle: 'none'}}>
                     <span onClick={()=>API.changePath("/books/" + item.id,{})}><img style= {{width:'60px', height: "100px", marginBottom:'60px'}} src={item.imageSrc} alt="cover"/></span>
                     <span> {item.title} </span>
                     <span style = {{float: 'right',marginRight: '100px'}}>${item.price}</span>
-                    <span><button onClick={this.removeItem.bind(this, item)}>[-]</button></span>
+                    <span><button onClick={()=>this.removeItem(item)}>[-]</button></span>
                     <span style={{marginRight: '10px', marginLeft:'10px'}}>{item.quantity}</span>
-                    <span><button onClick = {this.addQuantity.bind(this, item)}>[+]</button></span>
+                    <span><button onClick = {()=>this.addQuantity(item)}>[+]</button></span>
                 </li>
             )
         },this);

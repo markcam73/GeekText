@@ -491,29 +491,29 @@ def cart():
         con.row_factory = lite.Row
 
         cur = con.cursor()
-        
+
         items = []
 
         cur.execute("SELECT c.* FROM ShoppingCart as c INNER JOIN Users as u ON u.userid = c.userid where u.username=?", [username])
         row = cur.fetchall()
         for rows in row:
             items.append({
-                "bookID": rows["BookID"],
+                "id": rows["BookID"],
                 "title": rows["Title"],
                 "imageSrc": rows["ImageSrc"],
                 "price": rows["Price"],
                 "quantity": rows["Quantity"]
             })
-        
+
         cur.execute("SELECT * FROM Users WHERE username=?", [username])
         row = cur.fetchone()
 
         total = 0
         header = 0
         for item in items:
-            total += (item['price'] * item['quantity'])       
+            total += (item['price'] * item['quantity'])
             header += item['quantity']
-    
+
         if row:
             to_return ={
                 "userID": row["UserID"],
