@@ -52,7 +52,7 @@ class App extends Component {
       API.postRequest(payload, '/shopcart').then((jsonRes) => {
         console.log(jsonRes);
         if (jsonRes.status===200){
-          _this.setState({items:jsonRes.items, cartTotal: jsonRes.cartTotal, headerCount: jsonRes.headerCount, userID: jsonRes.userID})
+          _this.setState({items:jsonRes.items, cartTotal: jsonRes.cartTotal.toFixed(2), headerCount: jsonRes.headerCount, userID: jsonRes.userID})
           if(this.state.items.length > 0){
             alert("you have saved items in your cart!");
             console.log(this.state);
@@ -95,7 +95,8 @@ class App extends Component {
     if(this.state.cartTotal === 0){
       return;
     }
-    var temp = this.state.cartTotal - total.price;
+    var temp = parseInt(this.state.cartTotal) + parseInt(total.price);
+    console.log(temp);
     this.setState({
       cartTotal: temp.toFixed(2)
     })
