@@ -58,23 +58,47 @@ class ShopCart extends Component{
             header: this.state.header - 1
         });
         var e = {};
+        var rem = cartItem.price;
+        var neg = -Math.abs(rem);
         e.header = this.state.header - 1;
-        e.price = cartItem.price;
+        e.price = neg;
         console.log(e.price);
         PubSub.publish('cart.edited', e)
         PubSub.publish('change.price', e)
         this.countTotal();
         console.log(this.state);
     }
+
     addQuantity(cartItem){
+        var itemIndexInArray;
+        this.state.items.some(function(item, index) {
+          if(item.id === cartItem.id) {
+            itemIndexInArray = index;
+            return true;
+          }else{
+            return false;
+          }
+        });
+        //assuming item to be added is always in array
+        if(this.state.items[itemIndexInArray].quantity > 1){
+            var stateCopy = Object.assign({}, this.state);
+            stateCopy.items[itemIndexInArray].quantity += 1;
+            this.setState(stateCopy);
+        }
+        //tell parent about removal
+        console.log(this.state);
         this.setState({
-            header: this.state.header+1
-        })
+            header: this.state.header + 1,
+            items: this.state.items
+        });
         var e = {};
-        e.header = this.state.header;
+        e.header = this.state.header + 1;
+        e.price = cartItem.price;
+        console.log(e.price);
         PubSub.publish('cart.edited', e)
-        PubSub.publish('cart.added', cartItem)
+        PubSub.publish('change.price', e)
         this.countTotal();
+        console.log(this.state);
         console.log(this.props.location.state);
     }
     countTotal() {
@@ -99,14 +123,14 @@ class ShopCart extends Component{
         var payload = {"userid": this.state.userID};
         API.postRequest(payload, "/shopcart/deletecart").then((jsonRes)=>{
             if(jsonRes.status==200){
+                alert("Items successfully Deleted");
                 API.changePath("/shopcart", this.props.location.state)
             }
         })
     }
 
     saveItems(e){
-        var id = this.state.userID
-        var _this = this;
+        var id = this.state.userID;
         var payload = {"userid": id};
         API.postRequest(payload, "/shopcart/deletecart").then((jsonRes)=>{})
         this.state.items.map(function(item) {
@@ -120,6 +144,7 @@ class ShopCart extends Component{
             }
             API.postRequest(payload, "/shopcart/savecart").then((jsonRes)=>{})
         })
+        alert("Items successfully saved!");
     }
 
     render(){
