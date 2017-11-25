@@ -454,11 +454,64 @@ def delete_shipping_address():
         cur.execute("DELETE FROM ShippingAddresses WHERE UserID=? and street=? and city=? and state=? and zipcode=?", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])
     return jsonify({"status":200})
 
+@app.route("/shopcart", methods=['POST'])
+def cart():
+    user_token = request.json["token"]
+    username = jwt.decode(user_token, 'secret', algorithms=['HS256'])["username"]
+
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        
+        items = []
+
+        cur.execute("SELECT c.* FROM ShoppingCart as c INNER JOIN Users as u ON u.userid = c.userid where u.username=?", [username])
+        row = cur.fetchall()
+        for rows in row:
+            items.append({
+                "bookID": rows["BookID"],
+                "title": rows["Title"],
+                "imageSrc": rows["ImageSrc"],
+                "price": rows["Price"],
+                "quantity": rows["Quantity"]
+            })
+        
+        cur.execute("SELECT * FROM Users WHERE username=?", [username])
+        row = cur.fetchone()
+
+        total = 0
+        header = 0
+        for item in items:
+            total += (item['price'] * item['quantity'])       
+            header += item['quantity']
+    
+        if row:
+            to_return ={
+                "userID": row["UserID"],
+                "items": items,
+                "cartTotal": total,
+                "headerCount": header,
+                "status":200
+        }
+        return jsonify(to_return)
+
+
+
 @app.route("/shopcart/savecart", methods=['POST'])
 def save_cart():
     with con:
         con.row_factory = lite.Row
         cur = con.cursor()
 
-        cur.execute("INSERT INTO ShoppingCart(UserID,BookID,Quantity) VALUES(?,?,?)", [request.json["userid"],request.json["bookID"],request.json["quantity"]])
+        cur.execute("INSERT INTO ShoppingCart(UserID,BookID,Quantity,Price,ImageSrc,Title) VALUES(?,?,?,?,?,?)", [request.json['userid'],request.json["bookID"],request.json["quantity"],request.json['price'],request.json['imageSrc'],request.json['title']])
+    return jsonify({"status":200})
+
+@app.route("/shopcart/deletecart", methods=['POST'])
+def del_cart():
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+
+        cur.execute("DELETE FROM ShoppingCart WHERE UserID=?", [request.json['userid']])
     return jsonify({"status":200})
