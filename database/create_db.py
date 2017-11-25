@@ -43,12 +43,9 @@ with con:
     cur.execute("""INSERT INTO Books VALUES(30, 'The Subtle Art of Not Giving A F*ck', 'Mark Manson', 'https://www.booktopia.com.au/http_coversbooktopiacomau/big/9781925483857/the-subtle-art-of-not-giving-a-f-ck.jpg', 'Self-Help & How-To', 5, 9.99, 'December 2, 2016', 10, 'In this generation defining self-help guide a superstar blogger cuts through the crap to show us how to stop trying to be positive all the time so that we can truly become better, happier people.', "Mark Manson (born March 9, 1984) is an American self-help author, blogger and entrepreneur. He is the author of the website MarkManson.net and two books, The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living the Good Life, and Models: Attract Women through Honesty. He is also the CEO and founder of Infinity Squared Media LLC.", 'HarperOne')""")
 
 
-    cur.execute("CREATE TABLE ShoppingCart (UserId INT, BookID INT, Quantity INT)")
-    cur.execute("INSERT INTO ShoppingCart VALUES(1234, 2, 1)")
-    cur.execute("INSERT INTO ShoppingCart VALUES(123, 1, 3)")
-    cur.execute("INSERT INTO ShoppingCart VALUES(12, 4, 6)")
-    cur.execute("INSERT INTO ShoppingCart VALUES(1, 1, 2)")
-    cur.execute("INSERT INTO ShoppingCart VALUES(124, 2, 1)")
+    cur.execute("CREATE TABLE ShoppingCart (UserID INT, Title TEXT, ImageSrc TEXT, Price INT, BookID INT, Quantity INT)")
+    cur.execute("""INSERT INTO ShoppingCart VALUES(1, 'Battlefield Earth', 'https://images-na.ssl-images-amazon.com/images/I/814C%2BsV1vJL.jpg', 7.99, 1, 2)""")
+    cur.execute("""INSERT INTO ShoppingCart VALUES(2, 'A Game of Thrones', 'http://achalaupendran.com/wp-content/uploads/2016/06/song-of-ice-and-fire-book-cover.jpg', 17.99, 2, 2)""")
     cur.execute("DROP TABLE IF EXISTS Users")
     cur.execute("CREATE TABLE Users(UserID INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, LastName TEXT, HomeAddress TEXT, Email TEXT, username TEXT, password TEXT)")
     cur.execute("INSERT INTO Users VALUES(1, 'John', 'Doe','111 W 1st Ave','dummy@dummy.com','user1','$2b$12$fBNePNjTsJBzV5mTV0Rok.5UA5.PKKWrnqnEDHY5zHwXJVR6X8z3a')")
