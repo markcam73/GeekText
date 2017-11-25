@@ -20,7 +20,8 @@ class BookpageByAuthor extends Component{
 
             <div>
             <h1><center>Learn more about <b>{this.props.params.author}</b></center></h1>
-            <h2><center>{this.state.authorBio}</center></h2>
+            <h2><small><center>{this.state.authorBio}</center></small></h2>
+                <h2><center><b><u>Featured work</u></b></center></h2>
                 <BookList author={this.props.params.author}
                           pageSize={9}
                           hideSort={true}/>

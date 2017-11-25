@@ -91,6 +91,7 @@ class BookDetailed extends Component {
               <p><b>Genre: </b>{this.state.book.genre}</p>
               <p><b>Price:</b> ${this.state.book.price}</p>
               <p><b>Release Date: </b> {this.state.book.releaseDate}</p>
+              <p><b>Publisher: </b> {this.state.book.pubInfo}</p>
               <p>{this.state.book.description}</p>
               <div style={styles.ratingDiv}>
                 <p>Rating: </p>

@@ -168,7 +168,7 @@ class ShopCart extends Component{
                 <ul>
                     {items}
                 </ul>
-                <div><h1>Total: ${this.state.totalPrice} </h1></div>
+                <div><h1><small><b>Total: ${this.state.totalPrice} </b></small></h1></div>
                 <div><button> Checkout </button></div>
                 <div><button onClick = {this.saveItems}> Save Items For Later </button></div>
                 <div><button onClick = {this.deleteCart}> Delete Cart Items</button></div>
@@ -178,7 +178,7 @@ class ShopCart extends Component{
         return (
             <div className = 'shopping-cart'>
                 <div className="panel panel-default">
-                    <div>Your Cart: </div>
+                    <div><h1><small><b>Shopping Cart</b> </small></h1></div>
                     <div className="panel-body">
                         {items.length > 0 ? body : empty}
                     </div>
