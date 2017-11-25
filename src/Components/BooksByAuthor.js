@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BookList from './bookList';
+import PubSub from 'pubsub-js';
 import API from '../API'
 
 class BookpageByAuthor extends Component{
@@ -19,12 +20,13 @@ class BookpageByAuthor extends Component{
         return(
 
             <div>
-            <h1><center>Learn more about <b>{this.props.params.author}</b></center></h1>
-            <h2><center>{this.state.authorBio}</center></h2>
+                <h1><center>Learn more about <b>{this.props.params.author}</b></center></h1>
+                <p><center>{this.state.authorBio}</center></p>
                 <BookList author={this.props.params.author}
                           pageSize={9}
                           hideSort={true}/>
             </div>
+            
         );
     }
 }
