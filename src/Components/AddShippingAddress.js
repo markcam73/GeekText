@@ -10,7 +10,8 @@ class AddShippingAddress extends Component {
       street:"",
       city:"",
       state:"",
-      zipcode:""
+      zipcode:"",
+      incorrect:""
     };
 
     this.handleValueChange = this.handleValueChange.bind(this);
@@ -27,6 +28,8 @@ class AddShippingAddress extends Component {
     API.postRequest(_this.state,'/profile/insert/shippingaddress').then((jsonRes) => {
           if (jsonRes.status===200){
             API.changePath("/profile",{username:_this.state.username})
+          }else{
+            _this.setState({incorrect: jsonRes.error});
           }
     })
   }

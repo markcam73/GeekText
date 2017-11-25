@@ -45,13 +45,20 @@ class CommentBox extends Component {
     this.loadCommentsFromServer(this.props.bookID);
     this.timeout = setTimeout( ()=>this.loadCommentsFromServer(this.props.bookID), this.props.pollInterval);
   }
+  componentWillReceiveProps(newProps){
+      clearTimeout(this.timeout)
+      this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
+
+      this.loadCommentsFromServer(newProps.bookID);
+      this.timeout = setTimeout( ()=>this.loadCommentsFromServer(newProps.bookID), newProps.pollInterval);
+  }
   componentWillUnmount() {
      clearTimeout(this.timeout);
   }
   render() {
     return (
       <div className="commentBox">
-        <h1>Comments</h1>
+        <h3>&nbsp; Comments</h3>
         <CommentList comments={this.state.comments} />
         <CommentForm onCommentSubmit={(comment)=>this.handleCommentSubmit(comment)} />
       </div>

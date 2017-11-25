@@ -11,6 +11,7 @@ import os
 import jwt
 from validate_email import validate_email
 import re
+import luhn
 
 con = lite.connect(os.path.realpath(__file__)[0:os.path.realpath(__file__).find('routes.py')] + 'geektext.db')
 
@@ -105,6 +106,7 @@ def books():
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
                 "description": row["Description"],
+                "authorBio": row["AuthorBio"],
                 "pubInfo": row["PubInfo"]
 
             })
@@ -130,7 +132,9 @@ def top_books():
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "authorBio": row["AuthorBio"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)
@@ -154,7 +158,9 @@ def get_books_by_author(author):
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "authorBio": row["AuthorBio"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)
@@ -178,7 +184,9 @@ def get_books_in_genre(genre):
                 "rating": row["Rating"],
                 "price": row["Price"],
                 "releaseDate": row["ReleaseDate"],
-                "description": row["Description"]
+                "description": row["Description"],
+                "authorBio": row["AuthorBio"],
+                "pubInfo": row["PubInfo"]
 
             })
         return jsonify(to_return)
@@ -229,6 +237,21 @@ def comment_book():
         cur.execute("INSERT INTO Comments(BookId, UserID, Comment) VALUES (?,?,?)", [book_id, user_id,comment])
 
         return jsonify({"status":200})
+
+@app.route("/author/<author>")
+def get_bio(author):
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Books WHERE Author=?", [author])
+        row = cur.fetchone()
+        return jsonify({
+                            "status": 200,
+                            "author": row["Author"],
+                            "authorBio": row["AuthorBio"]
+                        })
+
 @app.route("/books/<book_id>/comments")
 def get_comments(book_id):
     with con:
@@ -294,11 +317,11 @@ def get_book(book_ID):
             "rating": row["Rating"],
             "price": row["Price"],
             "releaseDate": row["ReleaseDate"],
-            "description": row["Description"]
-
+            "description": row["Description"],
+            "authorBio": row["AuthorBio"],
+            "pubInfo": row["PubInfo"]
         }
         return jsonify(to_return)
-
 @app.route("/profile", methods=['POST'])
 def profile():
     with con:
@@ -349,6 +372,11 @@ def profile():
 @app.route('/profile/edit', methods=['POST'])
 def edit_profile():
     with con:
+        if not validate_email(request.json["email"]):
+            return jsonify({"status": 400, "error": "invalid email"})
+        address = request.json["homeAddress"]
+        if not re.search(r"\d{1,5}\s\w.?\s(\b\w*\b\s){1,2}\w*\.?",address):
+            return jsonify({"status": 400, "error": "invalid address"})
         con.row_factory = lite.Row
         cur = con.cursor()
         user_token = request.json["token"]
@@ -386,11 +414,11 @@ def insert_card():
 
         if not request.json["cardCompany"]:
             return jsonify({"status": 400, "error": "invalid credit card company"})
-        if not request.json["cardNumber"]:
+        if not request.json["cardNumber"] or not luhn.verify(request.json["cardNumber"]):
             return jsonify({"status": 400, "error": "invalid credit card number"})
-        if not request.json["expirationDate"]:
+        if not request.json["expirationDate"] or re.search(r'(?<![/\d])\d{1,2}/\d{2,4}(?![/\d])', request.json["expirationDate"]) is None:
             return jsonify({"status": 400, "error": "invalid expiration date"})
-        if not request.json["securityCode"]:
+        if not request.json["securityCode"] or not request.json["securityCode"].isdigit() or len(request.json["securityCode"]) !=3:
             return jsonify({"status": 400, "error": "invalid security code"})
 
         cur.execute("INSERT INTO PaymentInformation(UserID,CreditCardNumber,CreditCardCompany,ExpirationDate,SecruityCode) VALUES(?,?,?,?,?)", [userid,request.json["cardNumber"],request.json["cardCompany"],request.json["expirationDate"],request.json["securityCode"]])
@@ -426,13 +454,13 @@ def insert_shipping_address():
         row = cur.fetchone()
         userid = row["UserID"]
 
-        if not request.json["street"]:
+        if not request.json["street"] or not re.search(r"\d{1,5}\s\w.?\s(\b\w*\b\s){1,2}\w*\.?",request.json["street"]):
             return jsonify({"status": 400, "error": "invalid street"})
         if not request.json["city"]:
             return jsonify({"status": 400, "error": "invalid city"})
         if not request.json["state"]:
             return jsonify({"status": 400, "error": "invalid state"})
-        if not request.json["zipcode"]:
+        if not request.json["zipcode"] or not request.json["zipcode"].isdigit() or len( request.json["zipcode"]) != 5:
             return jsonify({"status": 400, "error": "invalid zipcode"})
 
         cur.execute("INSERT INTO ShippingAddresses(UserID,street,city,state,zipcode) VALUES(?,?,?,?,?)", [userid,request.json["street"],request.json["city"],request.json["state"],request.json["zipcode"]])

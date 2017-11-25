@@ -28,7 +28,7 @@ class CommentForm extends Component {
     if (!text) {
       return;
     }
-    this.props.onCommentSubmit({userID: this.state.userID, comment: text, firstName:this.state.firstName, lastName: this.state.lastName});
+    this.props.onCommentSubmit({userID: this.state.userID, comment: "&emsp;"+ text, firstName:this.state.firstName, lastName: this.state.lastName});
     this.setState({author: '', text: ''});
   }
   render() {
